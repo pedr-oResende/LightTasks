@@ -2,7 +2,9 @@ package br.com.lighttasks
 
 import android.app.Application
 import br.com.lighttasks.commom.util.PreferencesWrapper
-import br.com.lighttasks.presentation.data.remote.service.di.apiModules
+import br.com.lighttasks.data.di.mapperModules
+import br.com.lighttasks.data.di.repositoryModules
+import br.com.lighttasks.data.remote.service.di.apiModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.core.context.startKoin
@@ -20,7 +22,9 @@ class LightTasksApp : Application() {
             androidContext(this@LightTasksApp)
             androidFileProperties()
             modules(
-                apiModules
+                apiModules,
+                repositoryModules,
+                mapperModules
             )
         }
     }
