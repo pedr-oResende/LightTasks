@@ -8,15 +8,15 @@ import retrofit2.HttpException
 
 class UserRemoteDataSourceImpl(
     private val service: UserService
-) : br.com.lighttasks.data.data_source.user.UserRemoteDataSource {
-    override fun register(user: UserRequest): Unit? {
+) : UserRemoteDataSource {
+    override fun register(user: UserRequest?): Unit? {
         val response = service.register(user = user)
         if (response.isSuccessful)
             return response.body()
         throw HttpException(response)
     }
 
-    override fun login(user: UserRequest): BasicUserResponse {
+    override fun login(user: UserRequest?): BasicUserResponse {
         val response = service.login(user = user)
         if (response.isSuccessful)
             return response.body()!!
@@ -44,7 +44,7 @@ class UserRemoteDataSourceImpl(
         throw HttpException(response)
     }
 
-    override fun editUser(id: Long, user: UserRequest): Unit? {
+    override fun editUser(id: Long, user: UserRequest?): Unit? {
         val response = service.editUser(id = id, user = user)
         if (response.isSuccessful)
             return response.body()

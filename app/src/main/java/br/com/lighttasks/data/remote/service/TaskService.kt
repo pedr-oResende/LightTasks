@@ -11,7 +11,7 @@ interface TaskService {
     fun getTasksByUser(@Path("userId") userId: Long): Response<List<TaskResponse>>
 
     @GET("/tasks/{id}")
-    fun getTasksById(@Path("id") id: Long): Response<TaskResponse>
+    fun getTaskById(@Path("id") id: Long): Response<TaskResponse>
 
     @POST("/tasks")
     fun createTask(@Body task: TaskRequest): Response<TaskResponse>

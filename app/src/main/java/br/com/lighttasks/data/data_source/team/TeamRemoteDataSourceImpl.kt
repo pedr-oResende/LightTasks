@@ -15,7 +15,7 @@ class TeamRemoteDataSourceImpl(
         throw HttpException(response)
     }
 
-    override fun getTeamsById(id: Long): TeamResponse {
+    override fun getTeamById(id: Long): TeamResponse {
         val response = service.getTeamsById(id = id)
         if (response.isSuccessful)
             return response.body()!!

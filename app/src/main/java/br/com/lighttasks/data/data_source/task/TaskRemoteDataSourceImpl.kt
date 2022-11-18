@@ -15,8 +15,8 @@ class TaskRemoteDataSourceImpl(
         throw HttpException(response)
     }
 
-    override fun getTasksById(id: Long): TaskResponse {
-        val response = service.getTasksById(id = id)
+    override fun getTaskById(id: Long): TaskResponse {
+        val response = service.getTaskById(id = id)
         if (response.isSuccessful)
             return response.body()!!
         throw HttpException(response)

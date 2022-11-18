@@ -7,7 +7,7 @@ interface TeamRemoteDataSource {
 
     fun getTeamsByUser(id: Long): List<TeamResponse>
 
-    fun getTeamsById(id: Long): TeamResponse
+    fun getTeamById(id: Long): TeamResponse
 
     fun createTeam(team: TeamRequest): TeamResponse
 

@@ -7,7 +7,7 @@ interface TaskRemoteDataSource {
 
     fun getTasksByUser(id: Long): List<TaskResponse>
 
-    fun getTasksById(id: Long): TaskResponse
+    fun getTaskById(id: Long): TaskResponse
 
     fun createTask(task: TaskRequest): TaskResponse
 
