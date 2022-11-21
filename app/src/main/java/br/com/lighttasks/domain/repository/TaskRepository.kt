@@ -11,7 +11,7 @@ interface TaskRepository {
 
     fun createTask(task: Task): Flow<Task>
 
-    fun editTask(id: Long, task: Task): Flow<Task>
+    fun editTask(task: Task): Flow<Task>
 
     fun deleteTask(id: Long): Flow<Unit?>
 }

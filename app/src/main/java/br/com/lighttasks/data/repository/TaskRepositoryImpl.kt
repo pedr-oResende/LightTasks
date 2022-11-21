@@ -49,11 +49,11 @@ class TaskRepositoryImpl(
         }
     }
 
-    override fun editTask(id: Long, task: Task): Flow<Task> {
+    override fun editTask(task: Task): Flow<Task> {
         return flow {
             unsafeApiCall {
                 val response = taskRemoteDataSource.editTask(
-                    id = id,
+                    id = task.id!!,
                     task = taskEntityToRequestMapper.map(task)
                 )
                 val mappedResponse = taskResponseToEntityMapper.map(response)
