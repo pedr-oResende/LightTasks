@@ -7,7 +7,7 @@ interface BasicUserRemoteDataSource {
 
     fun getBasicUserById(id: Long): BasicUserResponse
 
-    fun editBasicUser(basicUser: BasicUserRequest): BasicUserResponse
+    fun editBasicUser(id: Long, basicUser: BasicUserRequest): BasicUserResponse
 
     fun addTeamMember(memberId: Long, teamId: Long): Unit?
 

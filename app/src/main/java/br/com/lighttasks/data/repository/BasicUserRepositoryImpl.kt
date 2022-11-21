@@ -28,7 +28,7 @@ class BasicUserRepositoryImpl(
 
     override fun editBasicUser(basicUser: BasicUser): Flow<BasicUser> {
         return flow {
-            val response = basicUserRemoteDataSource.editBasicUser(basicUserEntityToRequestMapper.map(basicUser))
+            val response = basicUserRemoteDataSource.editBasicUser(basicUser.id!!, basicUserEntityToRequestMapper.map(basicUser))
             val mappedResponse = basicUserResponseToEntityMapper.map(response)
             emit(mappedResponse)
         }

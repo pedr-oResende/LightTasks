@@ -13,8 +13,8 @@ interface BasicUserService {
     @GET("/basic_users/{id}")
     fun getBasicUserById(@Path("id") id: Long): Response<BasicUserResponse>
 
-    @PUT("/basic_users")
-    fun editBasicUser(@Body basicUser: BasicUserRequest): Response<BasicUserResponse>
+    @PUT("/basic_users/{id}")
+    fun editBasicUser(@Path("id") id: Long, @Body basicUser: BasicUserRequest): Response<BasicUserResponse>
 
     @PUT("/basic_users/{memberId}/add_to_team/{teamId}")
     fun addTeamMember(

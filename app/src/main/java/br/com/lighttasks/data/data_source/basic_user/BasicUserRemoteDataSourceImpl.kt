@@ -18,8 +18,8 @@ class BasicUserRemoteDataSourceImpl(
     }
 
 
-    override fun editBasicUser(basicUser: BasicUserRequest): BasicUserResponse {
-        val response = service.editBasicUser(basicUser = basicUser)
+    override fun editBasicUser(id: Long, basicUser: BasicUserRequest): BasicUserResponse {
+        val response = service.editBasicUser(id = id, basicUser = basicUser)
         if (response.isSuccessful)
             return response.body()!!
         throw HttpException(response)
