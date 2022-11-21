@@ -7,7 +7,7 @@ interface TaskRepository {
 
     fun getTasksByUser(id: Long): Flow<List<Task>>
 
-    fun getTasksById(id: Long): Flow<Task>
+    fun getTaskById(id: Long): Flow<Task>
 
     fun createTask(task: Task): Flow<Task>
 

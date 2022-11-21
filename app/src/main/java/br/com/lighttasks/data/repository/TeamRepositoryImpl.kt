@@ -49,11 +49,11 @@ class TeamRepositoryImpl(
         }
     }
 
-    override fun editTeam(id: Long, team: Team): Flow<Team> {
+    override fun editTeam(team: Team): Flow<Team> {
         return flow {
             unsafeApiCall {
                 val response = teamRemoteDataSource.editTeam(
-                    id = id,
+                    id = team.id!!,
                     team = teamEntityToRequestMapper.map(team)
                 )
                 val mappedResponse = teamResponseToEntityMapper.map(response)

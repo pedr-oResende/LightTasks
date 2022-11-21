@@ -5,6 +5,7 @@ import br.com.lighttasks.domain.usecase.basic_user.EditBasicUserUseCase
 import br.com.lighttasks.domain.usecase.basic_user.GetBasicUserUseCase
 import br.com.lighttasks.domain.usecase.basic_user.RemoveTeamMemberUseCase
 import br.com.lighttasks.domain.usecase.task.*
+import br.com.lighttasks.domain.usecase.team.*
 import br.com.lighttasks.domain.usecase.user.*
 import org.koin.dsl.module
 
@@ -36,8 +37,18 @@ val useCaseModules = module {
 
     single { EditTaskUseCase(get()) }
 
-    single { GetTasksByIdUseCase(get()) }
+    single { GetTaskByIdUseCase(get()) }
 
     single { GetTasksByUserUseCase(get()) }
+
+    single { CreateTeamUseCase(get()) }
+
+    single { DeleteTeamUseCase(get()) }
+
+    single { EditTeamUseCase(get()) }
+
+    single { GetTeamsByIdUseCase(get()) }
+
+    single { GetTeamsByUserUseCase(get()) }
 
 }

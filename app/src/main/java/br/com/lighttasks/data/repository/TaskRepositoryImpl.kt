@@ -27,7 +27,7 @@ class TaskRepositoryImpl(
         }
     }
 
-    override fun getTasksById(id: Long): Flow<Task> {
+    override fun getTaskById(id: Long): Flow<Task> {
         return flow {
             unsafeApiCall {
                 val response = taskRemoteDataSource.getTaskById(id = id)

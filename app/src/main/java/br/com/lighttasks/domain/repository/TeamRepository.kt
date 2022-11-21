@@ -11,7 +11,7 @@ interface TeamRepository {
 
     fun createTeam(team: Team): Flow<Team>
 
-    fun editTeam(id: Long, team: Team): Flow<Team>
+    fun editTeam(team: Team): Flow<Team>
 
     fun deleteTeam(id: Long): Flow<Unit?>
 }
