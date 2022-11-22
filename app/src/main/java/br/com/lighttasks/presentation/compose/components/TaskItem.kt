@@ -55,11 +55,13 @@ fun TaskItem(
                 Text(
                     text = task.name ?: "",
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = getPriorityOnContainerColor(priority = task.priority)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = task.description ?: "",
+                    color = getPriorityOnContainerColor(priority = task.priority),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
