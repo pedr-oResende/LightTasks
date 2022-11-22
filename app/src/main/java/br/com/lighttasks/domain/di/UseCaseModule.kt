@@ -27,8 +27,6 @@ val useCaseModules = module {
 
     single { AddTeamMemberUseCase(get()) }
 
-    single { AddTeamMemberUseCase(get()) }
-
     single { RemoveTeamMemberUseCase(get()) }
 
     single { CreateTaskUseCase(get()) }

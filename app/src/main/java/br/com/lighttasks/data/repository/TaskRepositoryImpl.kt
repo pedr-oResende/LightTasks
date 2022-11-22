@@ -7,6 +7,7 @@ import br.com.lighttasks.data.remote.model.tasks.TaskRequest
 import br.com.lighttasks.data.remote.model.tasks.TaskResponse
 import br.com.lighttasks.data.remote.util.unsafeApiCall
 import br.com.lighttasks.domain.model.Task
+import br.com.lighttasks.domain.model.tasks
 import br.com.lighttasks.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,9 +21,10 @@ class TaskRepositoryImpl(
     override fun getTasksByUser(id: Long): Flow<List<Task>> {
         return flow {
             unsafeApiCall {
-                val response = taskRemoteDataSource.getTasksByUser(id = id)
-                val mappedResponse = taskResponseListToEntityMapper.map(response)
-                emit(mappedResponse)
+//                val response = taskRemoteDataSource.getTasksByUser(id = id)
+//                val mappedResponse = taskResponseListToEntityMapper.map(response)
+//                emit(mappedResponse)
+                emit(tasks)
             }
         }
     }

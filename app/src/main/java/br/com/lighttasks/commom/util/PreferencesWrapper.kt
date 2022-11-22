@@ -8,7 +8,7 @@ import timber.log.Timber
 
 class PreferencesWrapper private constructor(context: Context) {
 
-    private var user: BasicUser? = null
+    var basicUser: BasicUser? = null
 
     fun putString(key: String, value: String?) {
         save(key, value)
@@ -68,19 +68,19 @@ class PreferencesWrapper private constructor(context: Context) {
 
     @Synchronized
     fun getUser(): BasicUser? {
-        if (user == null) {
+        if (basicUser == null) {
             try {
-                user = Paper.book(PAPER_USER_BOOK).read(PreferencesKey.BASIC_USER_KEY)
+                basicUser = Paper.book(PAPER_USER_BOOK).read(PreferencesKey.BASIC_USER_KEY)
             } catch (e: Exception) {
                 Timber.e(e, "Error getting user from paperDB")
             }
         }
-        return user
+        return basicUser
     }
 
     @Synchronized
     fun setUser(user: BasicUser) {
-        this.user = user
+        this.basicUser = user
         try {
             val book = Paper.book(PAPER_USER_BOOK)
             book.delete(PreferencesKey.BASIC_USER_KEY)
@@ -92,7 +92,7 @@ class PreferencesWrapper private constructor(context: Context) {
 
     fun clearPreferences() {
         Paper.book(PAPER_USER_BOOK).destroy()
-        user = null
+        basicUser = null
     }
 
     companion object {
@@ -106,14 +106,7 @@ class PreferencesWrapper private constructor(context: Context) {
             }
         }
 
-        val instance: PreferencesWrapper?
-            get() {
-                checkNotNull(preferencesWrapper) {
-                    "Preferences Wrapper wasn't initialized. " +
-                            "Call initPreferences(Context context) to initialize this."
-                }
-                return preferencesWrapper
-            }
+        var instance: PreferencesWrapper? = null
     }
 
     init {
