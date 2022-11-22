@@ -2,9 +2,7 @@ package br.com.lighttasks.presentation.ui.screens
 
 import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import br.com.lighttasks.commom.util.PreferencesKey
 import br.com.lighttasks.commom.util.PreferencesWrapper
 import br.com.lighttasks.presentation.ui.compose.navigation.*
@@ -17,15 +15,16 @@ fun MainScreen(
     onBackPressedDispatcher: OnBackPressedDispatcher
 ) {
     val navHostController = rememberAnimatedNavController()
-    val isLoggedIn = PreferencesWrapper.instance?.getString(PreferencesKey.IS_LOGGED_IN_KEY) != null
-    val startDestination = if (isLoggedIn) Screens.Tasks.route else Screens.Register.route
+    val isLoggedIn = PreferencesWrapper.instance?.getBoolean(PreferencesKey.IS_LOGGED_IN_KEY)
+    val startDestination = if (isLoggedIn == true) Screens.Tasks.route else Screens.Login.route
 
     AnimatedNavHost(
         navController = navHostController,
         startDestination = startDestination,
         builder = {
             register(
-                navHostController = navHostController
+                navHostController = navHostController,
+                onBackPressedDispatcher
             )
             login(
                 navHostController = navHostController
@@ -33,11 +32,20 @@ fun MainScreen(
             tasks(
                 navHostController = navHostController
             )
+            taskDetail(
+                navHostController = navHostController,
+                onBackPressedDispatcher = onBackPressedDispatcher
+            )
             teams(
                 navHostController = navHostController
             )
+            teamDetail(
+                navHostController = navHostController,
+                onBackPressedDispatcher = onBackPressedDispatcher
+            )
             profile(
-                navHostController = navHostController
+                navHostController = navHostController,
+                onBackPressedDispatcher = onBackPressedDispatcher
             )
         }
     )

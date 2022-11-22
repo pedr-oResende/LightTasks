@@ -1,5 +1,6 @@
 package br.com.lighttasks.presentation.ui.compose.navigation
 
+import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -12,7 +13,8 @@ import com.google.accompanist.navigation.animation.composable
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.register(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    onBackPressedDispatcher: OnBackPressedDispatcher
 ) {
     composable(
         route = Screens.Register.route
@@ -44,6 +46,18 @@ fun NavGraphBuilder.tasks(
 }
 
 @OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.taskDetail(
+    navHostController: NavHostController,
+    onBackPressedDispatcher: OnBackPressedDispatcher
+) {
+    composable(
+        route = Screens.TaskDetail.route
+    ) {
+        HomeTasksScreen()
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.teams(
     navHostController: NavHostController
 ) {
@@ -55,8 +69,21 @@ fun NavGraphBuilder.teams(
 }
 
 @OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.teamDetail(
+    navHostController: NavHostController,
+    onBackPressedDispatcher: OnBackPressedDispatcher
+) {
+    composable(
+        route = Screens.TeamDetail.route
+    ) {
+        TeamsScreen()
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.profile(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    onBackPressedDispatcher: OnBackPressedDispatcher
 ) {
     composable(
         route = Screens.Profile.route
