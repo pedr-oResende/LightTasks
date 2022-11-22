@@ -2,10 +2,13 @@ package br.com.lighttasks.commom.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import br.com.lighttasks.domain.model.BasicUser
+import io.paperdb.Paper
+import timber.log.Timber
 
 class PreferencesWrapper private constructor(context: Context) {
 
-
+    private var user: BasicUser? = null
 
     fun putString(key: String, value: String?) {
         save(key, value)
@@ -63,7 +66,38 @@ class PreferencesWrapper private constructor(context: Context) {
         editor?.putLong(key, value)?.apply()
     }
 
+    @Synchronized
+    fun getUser(): BasicUser? {
+        if (user == null) {
+            try {
+                user = Paper.book(PAPER_USER_BOOK).read(PreferencesKey.BASIC_USER_KEY)
+            } catch (e: Exception) {
+                Timber.e(e, "Error getting user from paperDB")
+            }
+        }
+        return user
+    }
+
+    @Synchronized
+    fun setUser(user: BasicUser) {
+        this.user = user
+        try {
+            val book = Paper.book(PAPER_USER_BOOK)
+            book.delete(PreferencesKey.BASIC_USER_KEY)
+            book.write(PreferencesKey.BASIC_USER_KEY, user)
+        } catch (e: Exception) {
+            Timber.e(e, "Error setting user")
+        }
+    }
+
+    fun clearPreferences() {
+        Paper.book(PAPER_USER_BOOK).destroy()
+        user = null
+    }
+
     companion object {
+        private const val PAPER_USER_BOOK = "USER_BOOK"
+
         private var preferencesWrapper: PreferencesWrapper? = null
         private var sharedPreferences: SharedPreferences? = null
         fun initPreferences(context: Context) {

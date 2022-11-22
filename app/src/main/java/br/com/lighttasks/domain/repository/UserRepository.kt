@@ -8,6 +8,8 @@ interface UserRepository {
 
     fun register(user: User): Flow<Unit?>
 
+    fun logout(id: Long): Flow<Unit?>
+
     fun login(user: User): Flow<BasicUser?>
 
     fun deleteUser(id: Long): Flow<Unit?>

@@ -33,6 +33,15 @@ class UserRepositoryImpl(
         }.flowOn(Dispatchers.IO)
     }
 
+    override fun logout(id: Long): Flow<Unit?> {
+        return flow {
+            unsafeApiCall {
+                val response = userRemoteDataSource.logout(id)
+                emit(response)
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
     override fun login(user: User): Flow<BasicUser> {
         return flow {
             unsafeApiCall {

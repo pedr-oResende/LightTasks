@@ -8,6 +8,7 @@ class RegisterUseCase(
     private val repository: UserRepository
 ) {
     operator fun invoke(user: User): Flow<Unit?> {
+
         return repository.register(user)
     }
 }
