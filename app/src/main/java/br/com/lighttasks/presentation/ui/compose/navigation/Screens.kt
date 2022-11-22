@@ -37,6 +37,16 @@ sealed class Screens(val route: String, val argumentKey: String) {
         navHostController.navigate(route)
     }
 
+    object Register : Screens(
+        route = "register",
+        argumentKey = "tasks_argument"
+    )
+
+
+    object Login : Screens(
+        route = "login",
+        argumentKey = "login_argument"
+    )
 
     object Tasks : Screens(
         route = "tasks?tasks_argument={tasks_argument}",
@@ -48,12 +58,12 @@ sealed class Screens(val route: String, val argumentKey: String) {
         argumentKey = "task_detail_argument"
     )
 
-    object Groups : Screens(
+    object Teams : Screens(
         route = "groups?groups_argument={groups_argument}",
         argumentKey = "groups_argument"
     )
 
-    object GroupsDetail : Screens(
+    object TeamDetail : Screens(
         route = "group_detail?group_detail_argument={group_detail_argument}",
         argumentKey = "group_detail_argument"
     )

@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class PreferencesWrapper private constructor(context: Context) {
+
+
+
     fun putString(key: String, value: String?) {
         save(key, value)
     }
