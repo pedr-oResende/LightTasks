@@ -1,8 +1,5 @@
 package br.com.lighttasks.presentation.compose.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Groups
@@ -11,15 +8,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import br.com.lighttasks.presentation.compose.navigation.Screens
 import br.com.lighttasks.presentation.model.NavigationBarItem
 
 @Composable
 fun DefaultNavigationBar(
-    navHostController: NavHostController,
-    content: @Composable (Modifier) -> Unit
+    navHostController: NavHostController
 ) {
     val navigationBarItems = listOf(
         NavigationBarItem(
@@ -30,7 +25,7 @@ fun DefaultNavigationBar(
         NavigationBarItem(
             name = "Teams",
             route = Screens.Teams.route,
-            Icons.Default.Groups
+            icon = Icons.Default.Groups
         ),
         NavigationBarItem(
             name = "Profile",
@@ -38,11 +33,7 @@ fun DefaultNavigationBar(
             icon = Icons.Default.AccountCircle
         )
     )
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        content(Modifier.weight(1f))
+    if (navigationBarItems.map { it.route }.contains(navHostController.currentDestination?.route)) {
         NavigationBar {
             val isSelected = remember { mutableStateOf(false) }
             navigationBarItems.forEach { item ->
@@ -62,5 +53,4 @@ fun DefaultNavigationBar(
             }
         }
     }
-
 }

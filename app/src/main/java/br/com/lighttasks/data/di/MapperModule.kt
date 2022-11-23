@@ -1,5 +1,6 @@
 package br.com.lighttasks.data.di
 
+import br.com.lighttasks.commom.mapper.NullableListMapperImpl
 import br.com.lighttasks.data.mapper.basic_user.BasicUserEntityToRequestMapper
 import br.com.lighttasks.data.mapper.basic_user.BasicUserResponseToEntityMapper
 import br.com.lighttasks.data.mapper.task.TaskEntityToRequestMapper
@@ -24,19 +25,25 @@ val mapperModules = module {
 
     single {
         BasicUserResponseToEntityMapper(
-            taskResponseToEntityMapper = get()
+            taskResponseToEntityMapper = NullableListMapperImpl(
+                mapper = get<TaskResponseToEntityMapper>()
+            )
         )
     }
 
     single {
         TeamResponseToEntityMapper(
-            basicUserResponseToEntityMapper = get()
+            basicUserResponseToEntityMapper = NullableListMapperImpl(
+                mapper = get<BasicUserResponseToEntityMapper>()
+            )
         )
     }
 
     single {
         TeamEntityToRequestMapper(
-            basicUserEntityToRequestMapper = get()
+            basicUserEntityToRequestMapper = NullableListMapperImpl(
+                mapper = get<BasicUserEntityToRequestMapper>()
+            )
         )
     }
 

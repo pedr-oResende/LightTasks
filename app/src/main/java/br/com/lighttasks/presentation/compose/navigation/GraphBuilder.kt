@@ -2,11 +2,13 @@ package br.com.lighttasks.presentation.compose.navigation
 
 import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import br.com.lighttasks.presentation.screens.home.HomeTasksMainScreen
 import br.com.lighttasks.presentation.screens.home.HomeViewModel
-import br.com.lighttasks.presentation.screens.login.LoginScreen
+import br.com.lighttasks.presentation.screens.login.LoginMainScreen
+import br.com.lighttasks.presentation.screens.login.LoginViewModel
 import br.com.lighttasks.presentation.screens.profile.ProfileScreen
 import br.com.lighttasks.presentation.screens.register.RegisterScreen
 import br.com.lighttasks.presentation.screens.teams.TeamsScreen
@@ -27,12 +29,18 @@ fun NavGraphBuilder.register(
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.login(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    snackbarHost: SnackbarHostState
 ) {
     composable(
         route = Screens.Login.route
     ) {
-        LoginScreen()
+        val viewModel = getViewModel<LoginViewModel>()
+        LoginMainScreen(
+            navHostController = navHostController,
+            viewModel = viewModel,
+            snackbarHost = snackbarHost
+        )
     }
 }
 
