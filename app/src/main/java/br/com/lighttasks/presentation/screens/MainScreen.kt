@@ -14,6 +14,7 @@ import br.com.lighttasks.commom.util.PreferencesKey
 import br.com.lighttasks.commom.util.PreferencesWrapper
 import br.com.lighttasks.presentation.compose.components.DefaultNavigationBar
 import br.com.lighttasks.presentation.compose.navigation.*
+import br.com.lighttasks.presentation.compose.widgets.TopBar
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
@@ -26,7 +27,6 @@ fun MainScreen(
     val snackbarHost = remember { SnackbarHostState() }
     val isLoggedIn = PreferencesWrapper.instance?.getBoolean(PreferencesKey.IS_LOGGED_IN_KEY)
     val startDestination = if (isLoggedIn == true) Screens.Tasks.route else Screens.Login.route
-
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHost)

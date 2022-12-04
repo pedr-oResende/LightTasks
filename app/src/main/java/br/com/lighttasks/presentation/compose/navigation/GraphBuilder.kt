@@ -10,7 +10,7 @@ import br.com.lighttasks.presentation.screens.home.HomeViewModel
 import br.com.lighttasks.presentation.screens.login.LoginMainScreen
 import br.com.lighttasks.presentation.screens.login.LoginViewModel
 import br.com.lighttasks.presentation.screens.profile.ProfileScreen
-import br.com.lighttasks.presentation.screens.register.RegisterScreen
+import br.com.lighttasks.presentation.screens.register.RegisterMainScreen
 import br.com.lighttasks.presentation.screens.teams.TeamsScreen
 import com.google.accompanist.navigation.animation.composable
 import org.koin.androidx.compose.getViewModel
@@ -23,7 +23,7 @@ fun NavGraphBuilder.register(
     composable(
         route = Screens.Register.route
     ) {
-        RegisterScreen()
+        RegisterMainScreen()
     }
 }
 
