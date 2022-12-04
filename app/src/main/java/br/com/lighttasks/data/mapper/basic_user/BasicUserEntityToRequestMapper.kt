@@ -11,7 +11,8 @@ class BasicUserEntityToRequestMapper : Mapper<BasicUser, BasicUserRequest> {
     override fun map(input: BasicUser) =
         with(input) {
             BasicUserRequest(
-                username = username
+                username = username,
+                fullName = fullName
             )
         }
 }

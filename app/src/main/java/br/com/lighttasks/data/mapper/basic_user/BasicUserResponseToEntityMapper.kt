@@ -15,6 +15,7 @@ class BasicUserResponseToEntityMapper(
             BasicUser(
                 id = id,
                 username = username,
+                fullName = fullName,
                 teamsId = teamsId,
                 tasks = taskResponseToEntityMapper.map(tasks)
             )
