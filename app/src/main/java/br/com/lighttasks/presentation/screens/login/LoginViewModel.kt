@@ -12,7 +12,7 @@ import br.com.lighttasks.domain.validator.ValidatePassword
 import br.com.lighttasks.domain.validator.ValidateUsername
 import br.com.lighttasks.presentation.model.StateUI
 import br.com.lighttasks.presentation.screens.login.ui.LoginActions
-import br.com.lighttasks.presentation.screens.login.ui.LoginEvents
+import br.com.lighttasks.presentation.screens.ui.CommonEvents
 import br.com.lighttasks.presentation.screens.login.ui.LoginUI
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -29,7 +29,7 @@ class LoginViewModel(
     private val _loginUi = mutableStateOf(LoginUI())
     val loginUI: State<LoginUI> = _loginUi
 
-    private val _eventFlow = MutableSharedFlow<LoginEvents>()
+    private val _eventFlow = MutableSharedFlow<CommonEvents>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun onEvent(event: LoginActions) {
@@ -76,11 +76,12 @@ class LoginViewModel(
             User(
                 id = null,
                 username = username,
+                fullName = null,
                 password = password
             )
         }
 
-    suspend fun emitLoginEvents(action: LoginEvents) {
+    suspend fun emitLoginEvents(action: CommonEvents) {
         _eventFlow.emit(action)
     }
 
@@ -101,7 +102,7 @@ class LoginViewModel(
     private fun throwErrorMessage(message: String?) {
         viewModelScope.launch {
             if (message != null)
-                emitLoginEvents(LoginEvents.InvalidFieldsError(message))
+                emitLoginEvents(CommonEvents.InvalidFieldsError(message))
         }
     }
 }

@@ -14,7 +14,6 @@ import br.com.lighttasks.commom.util.PreferencesKey
 import br.com.lighttasks.commom.util.PreferencesWrapper
 import br.com.lighttasks.presentation.compose.components.DefaultNavigationBar
 import br.com.lighttasks.presentation.compose.navigation.*
-import br.com.lighttasks.presentation.compose.widgets.TopBar
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
@@ -41,8 +40,8 @@ fun MainScreen(
             startDestination = startDestination,
             builder = {
                 register(
-                    navHostController = navHostController,
-                    onBackPressedDispatcher = onBackPressedDispatcher
+                    onBackPressedDispatcher = onBackPressedDispatcher,
+                    snackbarHost = snackbarHost
                 )
                 login(
                     navHostController = navHostController,

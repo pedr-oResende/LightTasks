@@ -9,6 +9,7 @@ class UserEntityToRequestMapper : Mapper<User, UserRequest> {
         with(input) {
             UserRequest(
                 username = username,
+                fullName = fullName,
                 password = password
             )
         }

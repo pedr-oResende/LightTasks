@@ -6,16 +6,16 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    fun register(user: User): Flow<Unit?>
+    fun register(user: User): Flow<Unit>
 
-    fun logout(id: Long): Flow<Unit?>
+    fun logout(id: Long): Flow<Unit>
 
     fun login(user: User): Flow<BasicUser?>
 
-    fun deleteUser(id: Long): Flow<Unit?>
+    fun deleteUser(id: Long): Flow<Unit>
 
-    fun getUser(id: Long): Flow<User?>
+    fun getUser(id: Long): Flow<User>
 
-    fun editUser(id: Long, user: User): Flow<Unit?>
+    fun editUser(id: Long, user: User): Flow<Unit>
 
 }

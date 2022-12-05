@@ -9,22 +9,22 @@ import retrofit2.http.*
 interface UserService {
 
     @POST("/users/register")
-    fun register(@Body user: UserRequest): Response<Unit>
+    suspend fun register(@Body user: UserRequest): Response<Unit>
 
     @POST("/users/login")
-    fun login(@Body user: UserRequest): Response<BasicUserResponse>
+    suspend fun login(@Body user: UserRequest): Response<BasicUserResponse>
 
     @POST("/users/logout/{id}")
-    fun logout(@Path("id") userId: Long): Response<Unit>
+    suspend fun logout(@Path("id") userId: Long): Response<Unit>
 
     @DELETE("/users/{id}")
-    fun deleteUserById(@Path("id") id: Long): Response<Unit>
+    suspend fun deleteUserById(@Path("id") id: Long): Response<Unit>
 
     @GET("user/{id}")
-    fun getUserById(@Path("id") id: Long): Response<UserResponse>
+    suspend fun getUserById(@Path("id") id: Long): Response<UserResponse>
 
     @PUT("users/{id}")
-    fun editUser(
+    suspend fun editUser(
         @Path("id") id: Long,
         @Body user: UserRequest
     ): Response<Unit>

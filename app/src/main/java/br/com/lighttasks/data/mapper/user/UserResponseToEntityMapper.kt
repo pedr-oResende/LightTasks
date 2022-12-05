@@ -10,6 +10,7 @@ class UserResponseToEntityMapper : Mapper<UserResponse, User> {
             User(
                 id = id,
                 username = username,
+                fullName = fullName,
                 password = password
             )
         }

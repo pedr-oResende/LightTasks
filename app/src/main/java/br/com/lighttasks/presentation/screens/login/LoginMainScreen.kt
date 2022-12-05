@@ -19,7 +19,7 @@ import br.com.lighttasks.presentation.compose.widgets.CustomEditText
 import br.com.lighttasks.presentation.compose.widgets.TopBar
 import br.com.lighttasks.presentation.model.StateUI
 import br.com.lighttasks.presentation.screens.login.ui.LoginActions
-import br.com.lighttasks.presentation.screens.login.ui.LoginEvents
+import br.com.lighttasks.presentation.screens.ui.CommonEvents
 import br.com.lighttasks.presentation.screens.login.ui.LoginUI
 import kotlinx.coroutines.flow.collectLatest
 
@@ -41,11 +41,10 @@ fun LoginMainScreen(
     LaunchedEffect(true) {
         viewModel.eventFlow.collectLatest { actions ->
             when (actions) {
-                // TODO(receber a mensagem de erro pelo backend)
-                is LoginEvents.GenericError -> {
+                is CommonEvents.GenericError -> {
                     snackbarHost.showSnackbar(message = "Não foi possível realizar o login")
                 }
-                is LoginEvents.InvalidFieldsError -> {
+                is CommonEvents.InvalidFieldsError -> {
                     snackbarHost.showSnackbar(message = actions.message)
                 }
             }
@@ -55,7 +54,7 @@ fun LoginMainScreen(
         is StateUI.Error -> {
             LaunchedEffect(true) {
                 setShowLoadingDialog(false)
-                viewModel.emitLoginEvents(LoginEvents.GenericError)
+                viewModel.emitLoginEvents(CommonEvents.GenericError)
             }
         }
         is StateUI.Idle -> Unit

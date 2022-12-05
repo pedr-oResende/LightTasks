@@ -6,16 +6,16 @@ import br.com.lighttasks.data.remote.model.users.UserResponse
 
 interface UserRemoteDataSource {
 
-    fun register(user: UserRequest): Unit?
+    suspend fun register(user: UserRequest)
 
-    fun login(user: UserRequest): BasicUserResponse
+    suspend fun login(user: UserRequest): BasicUserResponse
 
-    fun logout(id: Long): Unit?
+    suspend fun logout(id: Long)
 
-    fun deleteUser(id: Long): Unit?
+    suspend fun deleteUser(id: Long)
 
-    fun getUser(id: Long): UserResponse
+    suspend fun getUser(id: Long): UserResponse
 
-    fun editUser(id: Long, user: UserRequest): Unit?
+    suspend fun editUser(id: Long, user: UserRequest)
 
 }

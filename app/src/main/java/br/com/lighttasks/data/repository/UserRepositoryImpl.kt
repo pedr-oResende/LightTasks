@@ -2,9 +2,6 @@ package br.com.lighttasks.data.repository
 
 import br.com.lighttasks.commom.mapper.Mapper
 import br.com.lighttasks.data.data_source.user.UserRemoteDataSource
-import br.com.lighttasks.data.mapper.basic_user.BasicUserResponseToEntityMapper
-import br.com.lighttasks.data.mapper.user.UserEntityToRequestMapper
-import br.com.lighttasks.data.mapper.user.UserResponseToEntityMapper
 import br.com.lighttasks.data.remote.model.users.BasicUserResponse
 import br.com.lighttasks.data.remote.model.users.UserRequest
 import br.com.lighttasks.data.remote.model.users.UserResponse
@@ -24,7 +21,7 @@ class UserRepositoryImpl(
     private val basicUserResponseToEntityMapper: Mapper<BasicUserResponse, BasicUser>
 ) : UserRepository {
 
-    override fun register(user: User): Flow<Unit?> {
+    override fun register(user: User): Flow<Unit> {
         return flow {
             unsafeApiCall {
                 val response = userRemoteDataSource.register(userEntityToRequestMapper.map(user))
@@ -33,7 +30,7 @@ class UserRepositoryImpl(
         }.flowOn(Dispatchers.IO)
     }
 
-    override fun logout(id: Long): Flow<Unit?> {
+    override fun logout(id: Long): Flow<Unit> {
         return flow {
             unsafeApiCall {
                 val response = userRemoteDataSource.logout(id)
@@ -52,7 +49,7 @@ class UserRepositoryImpl(
         }.flowOn(Dispatchers.IO)
     }
 
-    override fun deleteUser(id: Long): Flow<Unit?> {
+    override fun deleteUser(id: Long): Flow<Unit> {
         return flow {
             unsafeApiCall {
                 val response = userRemoteDataSource.deleteUser(id)
@@ -71,7 +68,7 @@ class UserRepositoryImpl(
         }.flowOn(Dispatchers.IO)
     }
 
-    override fun editUser(id: Long, user: User): Flow<Unit?> {
+    override fun editUser(id: Long, user: User): Flow<Unit> {
         return flow {
             unsafeApiCall {
                 val response = userRemoteDataSource.editUser(

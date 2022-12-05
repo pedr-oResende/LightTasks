@@ -22,7 +22,7 @@ fun TopBar(
         navigationIcon = {
             if (onBackPressedDispatcher != null) {
                 IconButton(onClick = { onBackPressedDispatcher.onBackPressed() }) {
-                    Icons.Default.ArrowBack
+                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                 }
             }
         },

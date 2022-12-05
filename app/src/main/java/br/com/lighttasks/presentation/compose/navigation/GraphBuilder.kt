@@ -11,19 +11,25 @@ import br.com.lighttasks.presentation.screens.login.LoginMainScreen
 import br.com.lighttasks.presentation.screens.login.LoginViewModel
 import br.com.lighttasks.presentation.screens.profile.ProfileScreen
 import br.com.lighttasks.presentation.screens.register.RegisterMainScreen
+import br.com.lighttasks.presentation.screens.register.RegisterViewModel
 import br.com.lighttasks.presentation.screens.teams.TeamsScreen
 import com.google.accompanist.navigation.animation.composable
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.register(
-    navHostController: NavHostController,
-    onBackPressedDispatcher: OnBackPressedDispatcher
+    onBackPressedDispatcher: OnBackPressedDispatcher,
+    snackbarHost: SnackbarHostState
 ) {
     composable(
         route = Screens.Register.route
     ) {
-        RegisterMainScreen()
+        val viewModel = getViewModel<RegisterViewModel>()
+        RegisterMainScreen(
+            onBackPressedDispatcher = onBackPressedDispatcher,
+            viewModel = viewModel,
+            snackbarHost = snackbarHost
+        )
     }
 }
 
