@@ -9,5 +9,5 @@ data class UserResponse(
     @SerializedName("username") val username: String?,
     @SerializedName("full_name") val fullName: String?,
     @SerializedName("password") val password: String?,
-    @SerializedName("logged_in") val loggedIn: String?
+    @SerializedName("logged_in") val loggedIn: Boolean?
 )

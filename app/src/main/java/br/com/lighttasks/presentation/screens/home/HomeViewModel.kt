@@ -32,8 +32,7 @@ class HomeViewModel(
 
     private fun loadTasks() {
         viewModelScope.launch {
-//            val userId = PreferencesWrapper.instance?.basicUser?.id ?: return@launch
-            val userId = 0L
+            val userId = PreferencesWrapper.instance?.basicUser?.id ?: return@launch
             getTasksUseCase(userId).onStart {
                 _taskList.emit(StateUI.Processing())
             }.catch {
@@ -50,7 +49,7 @@ class HomeViewModel(
 
     fun refresh() = loadTasks()
 
-    fun onClickFilter(
+    fun actionFilter(
         filter: Priority
     ) {
         homeUI.value.apply {

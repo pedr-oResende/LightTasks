@@ -5,7 +5,7 @@ import br.com.lighttasks.commom.mapper.NullableListMapper
 import br.com.lighttasks.data.data_source.team.TeamRemoteDataSource
 import br.com.lighttasks.data.remote.model.teams.TeamRequest
 import br.com.lighttasks.data.remote.model.teams.TeamResponse
-import br.com.lighttasks.data.remote.util.unsafeApiCall
+import br.com.lighttasks.data.remote.util.apiCall
 import br.com.lighttasks.domain.model.Team
 import br.com.lighttasks.domain.repository.TeamRepository
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +19,7 @@ class TeamRepositoryImpl(
 ) : TeamRepository {
     override fun getTeamsByUser(id: Long): Flow<List<Team>> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = teamRemoteDataSource.getTeamsByUser(id = id)
                 val mappedResponse = teamResponseListToEntityMapper.map(response)
                 emit(mappedResponse)
@@ -29,7 +29,7 @@ class TeamRepositoryImpl(
 
     override fun getTeamById(id: Long): Flow<Team> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = teamRemoteDataSource.getTeamById(id = id)
                 val mappedResponse = teamResponseToEntityMapper.map(response)
                 emit(mappedResponse)
@@ -39,7 +39,7 @@ class TeamRepositoryImpl(
 
     override fun createTeam(team: Team): Flow<Team> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = teamRemoteDataSource.createTeam(
                     team = teamEntityToRequestMapper.map(team)
                 )
@@ -51,7 +51,7 @@ class TeamRepositoryImpl(
 
     override fun editTeam(team: Team): Flow<Team> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = teamRemoteDataSource.editTeam(
                     id = team.id!!,
                     team = teamEntityToRequestMapper.map(team)
@@ -64,7 +64,7 @@ class TeamRepositoryImpl(
 
     override fun deleteTeam(id: Long): Flow<Unit?> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = teamRemoteDataSource.deleteTeam(id = id)
                 emit(response)
             }

@@ -60,7 +60,7 @@ fun HomeTasksScreen(
                 SmallMenuItem(
                     name = priority.toString(),
                     onClick = {
-                        viewModel.onClickFilter(priority)
+                        viewModel.actionFilter(priority)
                     },
                     color = getPriorityContainerColor(priority)
                 )

@@ -20,8 +20,10 @@ class ToStringConverterFactory : Converter.Factory() {
     }
 
     override fun requestBodyConverter(
-        type: Type, parameterAnnotations: Array<Annotation>,
-        methodAnnotations: Array<Annotation>, retrofit: Retrofit
+        type: Type,
+        parameterAnnotations: Array<Annotation>,
+        methodAnnotations: Array<Annotation>,
+        retrofit: Retrofit
     ): Converter<*, RequestBody?>? {
         return if (String::class.java == type) {
             Converter { value: String? ->

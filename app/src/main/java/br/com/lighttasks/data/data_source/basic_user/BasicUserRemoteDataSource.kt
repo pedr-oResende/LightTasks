@@ -1,7 +1,7 @@
 package br.com.lighttasks.data.data_source.basic_user
 
-import br.com.lighttasks.data.remote.model.users.BasicUserRequest
-import br.com.lighttasks.data.remote.model.users.BasicUserResponse
+import br.com.lighttasks.data.remote.model.basic_users.BasicUserRequest
+import br.com.lighttasks.data.remote.model.basic_users.BasicUserResponse
 
 interface BasicUserRemoteDataSource {
 

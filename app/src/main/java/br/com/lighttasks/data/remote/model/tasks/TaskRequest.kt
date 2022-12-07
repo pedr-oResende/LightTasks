@@ -10,6 +10,5 @@ data class TaskRequest(
     @SerializedName("deadline") val deadline: String?,
     @SerializedName("team_id") val teamId: Long?,
     @SerializedName("responsible_id") val responsibleId: Long?,
-    @SerializedName("is_done") val isDone: Boolean?,
-
+    @SerializedName("is_done") val isDone: Boolean?
 )

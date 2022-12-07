@@ -5,7 +5,7 @@ import br.com.lighttasks.commom.mapper.NullableListMapper
 import br.com.lighttasks.data.data_source.task.TaskRemoteDataSource
 import br.com.lighttasks.data.remote.model.tasks.TaskRequest
 import br.com.lighttasks.data.remote.model.tasks.TaskResponse
-import br.com.lighttasks.data.remote.util.unsafeApiCall
+import br.com.lighttasks.data.remote.util.apiCall
 import br.com.lighttasks.domain.model.Task
 import br.com.lighttasks.domain.model.tasks
 import br.com.lighttasks.domain.repository.TaskRepository
@@ -20,7 +20,7 @@ class TaskRepositoryImpl(
 ) : TaskRepository {
     override fun getTasksByUser(id: Long): Flow<List<Task>> {
         return flow {
-            unsafeApiCall {
+            apiCall {
 //                val response = taskRemoteDataSource.getTasksByUser(id = id)
 //                val mappedResponse = taskResponseListToEntityMapper.map(response)
 //                emit(mappedResponse)
@@ -31,7 +31,7 @@ class TaskRepositoryImpl(
 
     override fun getTaskById(id: Long): Flow<Task> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = taskRemoteDataSource.getTaskById(id = id)
                 val mappedResponse = taskResponseToEntityMapper.map(response)
                 emit(mappedResponse)
@@ -41,7 +41,7 @@ class TaskRepositoryImpl(
 
     override fun createTask(task: Task): Flow<Task> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = taskRemoteDataSource.createTask(
                     task = taskEntityToRequestMapper.map(task)
                 )
@@ -53,7 +53,7 @@ class TaskRepositoryImpl(
 
     override fun editTask(task: Task): Flow<Task> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = taskRemoteDataSource.editTask(
                     id = task.id!!,
                     task = taskEntityToRequestMapper.map(task)
@@ -66,7 +66,7 @@ class TaskRepositoryImpl(
 
     override fun deleteTask(id: Long): Flow<Unit?> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = taskRemoteDataSource.deleteTask(id = id)
                 emit(response)
             }

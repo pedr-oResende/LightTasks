@@ -2,7 +2,6 @@ package br.com.lighttasks.domain.model
 
 import br.com.lighttasks.commom.util.date.DateUtils
 
-
 enum class Priority {
     Low, Medium, High;
 

@@ -1,6 +1,6 @@
 package br.com.lighttasks.data.remote.service
 
-import br.com.lighttasks.data.remote.model.users.BasicUserResponse
+import br.com.lighttasks.data.remote.model.basic_users.BasicUserResponse
 import br.com.lighttasks.data.remote.model.users.UserRequest
 import br.com.lighttasks.data.remote.model.users.UserResponse
 import retrofit2.Response

@@ -6,7 +6,7 @@ import br.com.lighttasks.domain.model.BasicUser
 import io.paperdb.Paper
 import timber.log.Timber
 
-class PreferencesWrapper private constructor(context: Context) {
+class PreferencesWrapper(context: Context) {
 
     var basicUser: BasicUser? = null
 

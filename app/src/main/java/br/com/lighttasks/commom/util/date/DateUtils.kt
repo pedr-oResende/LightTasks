@@ -7,13 +7,12 @@ import java.util.*
 
 class DateUtils {
     companion object {
-
-        private fun getNowDate(): String? {
+        private fun getCurrentDate(): String? {
             val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             return LocalDateTime.now().format(dtf)
         }
 
-        fun daysBetweenDates(second: String?, first: String = getNowDate().toString()): Long? {
+        fun daysBetweenDates(second: String?, first: String = getCurrentDate().toString()): Long? {
             if (second == null) return null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
             val firstDate = sdf.parse(first)!!
@@ -24,6 +23,5 @@ class DateUtils {
             val hours = minutes / 60
             return (hours / 24) + 1
         }
-
     }
 }

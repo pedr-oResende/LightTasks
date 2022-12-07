@@ -7,7 +7,7 @@ import retrofit2.HttpException
 
 class TeamRemoteDataSourceImpl(
     private val service: TeamService
-) : br.com.lighttasks.data.data_source.team.TeamRemoteDataSource {
+) : TeamRemoteDataSource {
     override fun getTeamsByUser(id: Long): List<TeamResponse> {
         val response = service.getTeamsByUser(userId = id)
         if (response.isSuccessful)

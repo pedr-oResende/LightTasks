@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class UserRequest(
     @SerializedName("username") val username: String?,
     @SerializedName("full_name") val fullName: String?,
-    @SerializedName("password") val password: String?,
+    @SerializedName("password") val password: String?
 )

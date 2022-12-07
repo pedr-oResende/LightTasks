@@ -1,9 +1,8 @@
 package br.com.lighttasks.data.data_source.basic_user
 
-import br.com.lighttasks.data.remote.model.users.BasicUserRequest
-import br.com.lighttasks.data.remote.model.users.BasicUserResponse
+import br.com.lighttasks.data.remote.model.basic_users.BasicUserRequest
+import br.com.lighttasks.data.remote.model.basic_users.BasicUserResponse
 import br.com.lighttasks.data.remote.service.BasicUserService
-import br.com.lighttasks.domain.model.BasicUser
 import retrofit2.HttpException
 
 class BasicUserRemoteDataSourceImpl(
@@ -16,7 +15,6 @@ class BasicUserRemoteDataSourceImpl(
             return response.body()!!
         throw HttpException(response)
     }
-
 
     override fun editBasicUser(id: Long, basicUser: BasicUserRequest): BasicUserResponse {
         val response = service.editBasicUser(id = id, basicUser = basicUser)

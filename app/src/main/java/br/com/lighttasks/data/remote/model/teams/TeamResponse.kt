@@ -1,6 +1,6 @@
 package br.com.lighttasks.data.remote.model.teams
 
-import br.com.lighttasks.data.remote.model.users.BasicUserResponse
+import br.com.lighttasks.data.remote.model.basic_users.BasicUserResponse
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 

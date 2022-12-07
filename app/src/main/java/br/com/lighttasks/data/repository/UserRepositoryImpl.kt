@@ -2,10 +2,10 @@ package br.com.lighttasks.data.repository
 
 import br.com.lighttasks.commom.mapper.Mapper
 import br.com.lighttasks.data.data_source.user.UserRemoteDataSource
-import br.com.lighttasks.data.remote.model.users.BasicUserResponse
+import br.com.lighttasks.data.remote.model.basic_users.BasicUserResponse
 import br.com.lighttasks.data.remote.model.users.UserRequest
 import br.com.lighttasks.data.remote.model.users.UserResponse
-import br.com.lighttasks.data.remote.util.unsafeApiCall
+import br.com.lighttasks.data.remote.util.apiCall
 import br.com.lighttasks.domain.model.BasicUser
 import br.com.lighttasks.domain.model.User
 import br.com.lighttasks.domain.repository.UserRepository
@@ -23,7 +23,7 @@ class UserRepositoryImpl(
 
     override fun register(user: User): Flow<Unit> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = userRemoteDataSource.register(userEntityToRequestMapper.map(user))
                 emit(response)
             }
@@ -32,7 +32,7 @@ class UserRepositoryImpl(
 
     override fun logout(id: Long): Flow<Unit> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = userRemoteDataSource.logout(id)
                 emit(response)
             }
@@ -41,7 +41,7 @@ class UserRepositoryImpl(
 
     override fun login(user: User): Flow<BasicUser> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = userRemoteDataSource.login(userEntityToRequestMapper.map(user))
                 val mappedResponse = basicUserResponseToEntityMapper.map(response)
                 emit(mappedResponse)
@@ -51,7 +51,7 @@ class UserRepositoryImpl(
 
     override fun deleteUser(id: Long): Flow<Unit> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = userRemoteDataSource.deleteUser(id)
                 emit(response)
             }
@@ -60,7 +60,7 @@ class UserRepositoryImpl(
 
     override fun getUser(id: Long): Flow<User> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = userRemoteDataSource.getUser(id)
                 val mappedResponse = userResponseToEntityMapper.map(response)
                 emit(mappedResponse)
@@ -70,7 +70,7 @@ class UserRepositoryImpl(
 
     override fun editUser(id: Long, user: User): Flow<Unit> {
         return flow {
-            unsafeApiCall {
+            apiCall {
                 val response = userRemoteDataSource.editUser(
                     id = id,
                     user = userEntityToRequestMapper.map(user)

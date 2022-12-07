@@ -2,36 +2,13 @@ package br.com.lighttasks.data.remote.util
 
 import br.com.lighttasks.commom.model.Message
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.io.IOException
 import br.com.lighttasks.commom.model.Result
 
-
-internal suspend fun <T : Any> safeApiCall(call: suspend () -> Result<T>): Result<T> {
-    return withContext(Dispatchers.IO) {
-        try {
-            call()
-        } catch (throwable: Throwable) {
-            when (throwable) {
-                is IOException -> Result.Error(Result.Error.Type.NETWORK)
-                is HttpException -> {
-                    val code = throwable.code()
-                    val message = convertErrorBody(throwable)
-                    Result.Error(Result.Error.Type.HTTP, code, message)
-                }
-                else -> {
-                    Result.Error(Result.Error.Type.GENERIC)
-                }
-            }
-        }
-    }
-}
-
-internal suspend fun <T : Any> unsafeApiCall(call: suspend () -> T): T {
+internal suspend fun <T : Any> apiCall(call: suspend () -> T): T {
     return coroutineScope {
         try {
             call()

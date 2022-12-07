@@ -7,7 +7,7 @@ import retrofit2.HttpException
 
 class TaskRemoteDataSourceImpl(
     private val service: TaskService
-) : br.com.lighttasks.data.data_source.task.TaskRemoteDataSource {
+) : TaskRemoteDataSource {
     override fun getTasksByUser(id: Long): List<TaskResponse> {
         val response = service.getTasksByUser(userId = id)
         if (response.isSuccessful)

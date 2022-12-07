@@ -1,6 +1,6 @@
 package br.com.lighttasks.data.data_source.user
 
-import br.com.lighttasks.data.remote.model.users.BasicUserResponse
+import br.com.lighttasks.data.remote.model.basic_users.BasicUserResponse
 import br.com.lighttasks.data.remote.model.users.UserRequest
 import br.com.lighttasks.data.remote.model.users.UserResponse
 
