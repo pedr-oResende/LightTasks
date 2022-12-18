@@ -18,7 +18,7 @@ class TaskRepositoryImpl(
     private val taskEntityToRequestMapper: Mapper<Task, TaskRequest>,
     private val taskResponseToEntityMapper: Mapper<TaskResponse, Task>
 ) : TaskRepository {
-    override fun getTasksByUser(id: Long): Flow<List<Task>> {
+    override fun getTasksByUser(id: Long?): Flow<List<Task>> {
         return flow {
             apiCall {
 //                val response = taskRemoteDataSource.getTasksByUser(id = id)

@@ -5,10 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.lighttasks.commom.util.PreferencesWrapper
-import br.com.lighttasks.domain.model.Priority
 import br.com.lighttasks.domain.model.Task
 import br.com.lighttasks.domain.usecase.task.GetTasksByUserUseCase
 import br.com.lighttasks.presentation.model.StateUI
+import br.com.lighttasks.presentation.screens.home.ui.HomeEvents
 import br.com.lighttasks.presentation.screens.home.ui.HomeUI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,9 +30,45 @@ class HomeViewModel(
         loadTasks()
     }
 
+    fun onEvent(event: HomeEvents) {
+        event.run {
+            when (this) {
+                is HomeEvents.FilterByPriority -> {
+                    homeUI.value.apply {
+                        if (_homeUI.value.priorities.contains(filter)) {
+                            _homeUI.value = copy(priorities = priorities.minus(filter))
+                        } else {
+                            _homeUI.value = copy(priorities = priorities.plus(filter))
+                        }
+                    }
+                    filter()
+                }
+                is HomeEvents.SearchTextChanged -> {
+                    _homeUI.value = homeUI.value.copy(
+                        searchText = text
+                    )
+                    filter()
+                }
+                is HomeEvents.CloseSearchBar -> {
+                    _homeUI.value = homeUI.value.copy(
+                        isSearchingTask = false,
+                        searchText = ""
+                    )
+                    filter()
+                }
+                is HomeEvents.OpenSearchBar -> {
+                    _homeUI.value = homeUI.value.copy(
+                        isSearchingTask = true
+                    )
+                }
+            }
+        }
+    }
+
+
     private fun loadTasks() {
         viewModelScope.launch {
-            val userId = PreferencesWrapper.instance?.basicUser?.id ?: return@launch
+            val userId = PreferencesWrapper.instance?.basicUser?.id
             getTasksUseCase(userId).onStart {
                 _taskList.emit(StateUI.Processing())
             }.catch {
@@ -49,27 +85,34 @@ class HomeViewModel(
 
     fun refresh() = loadTasks()
 
-    fun actionFilter(
-        filter: Priority
-    ) {
-        homeUI.value.apply {
-            if (_homeUI.value.filters.contains(filter))
-                _homeUI.value = copy(filters = filters.minus(filter))
-            else
-                _homeUI.value = copy(filters = filters.plus(filter))
-        }
-        filter()
-    }
-
     private fun filter() {
         homeUI.value.apply {
             _homeUI.value = copy(
-                filteredTasks = if (filters.isEmpty()) {
-                    tasks
-                } else {
-                    tasks.filter { filters.contains(it.priority) }
-                }
+                filteredTasks = tasks
+                    .filter { task ->
+                        filterByPriority(task)
+                    }
+                    .filter { task ->
+                        filterByNameOrDescription(task)
+                    }
             )
+        }
+    }
+
+    private fun filterByPriority(task: Task) = _homeUI.value.run {
+        if (priorities.isNotEmpty()) {
+            priorities.contains(task.priority)
+        } else {
+            true
+        }
+    }
+
+    private fun filterByNameOrDescription(task: Task) = _homeUI.value.run {
+        if (searchText.isNotBlank()) {
+            task.name?.contains(searchText, ignoreCase = true) == true
+                    || task.description?.contains(searchText, ignoreCase = true) == true
+        } else {
+            true
         }
     }
 }

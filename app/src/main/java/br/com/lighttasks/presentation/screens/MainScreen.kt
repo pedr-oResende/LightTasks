@@ -25,7 +25,7 @@ fun MainScreen(
     val navHostController = rememberAnimatedNavController()
     val snackbarHost = remember { SnackbarHostState() }
     val isLoggedIn = PreferencesWrapper.instance?.getBoolean(PreferencesKey.IS_LOGGED_IN_KEY)
-    val startDestination = if (isLoggedIn == true) Screens.Tasks.route else Screens.Login.route
+    val startDestination = if (true) Screens.Tasks.route else Screens.Login.route
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHost)

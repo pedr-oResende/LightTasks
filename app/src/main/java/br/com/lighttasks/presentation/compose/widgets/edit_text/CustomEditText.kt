@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.compose.widgets
+package br.com.lighttasks.presentation.compose.widgets.edit_text
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

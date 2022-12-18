@@ -13,10 +13,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import br.com.lighttasks.presentation.compose.components.CustomLargeButton
 import br.com.lighttasks.presentation.compose.components.dialog.LoadingDialog
-import br.com.lighttasks.presentation.compose.widgets.CustomEditText
-import br.com.lighttasks.presentation.compose.widgets.TopBar
+import br.com.lighttasks.presentation.compose.widgets.edit_text.CustomEditText
+import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.register.ui.RegisterActions
+import br.com.lighttasks.presentation.screens.register.ui.RegisterEvents
 import br.com.lighttasks.presentation.screens.ui.CommonEvents
 import kotlinx.coroutines.flow.collectLatest
 
@@ -75,7 +75,7 @@ fun RegisterScreen(
         topBar = {
             TopBar(
                 title = "Cadastro",
-                onBackPressedDispatcher = onBackPressedDispatcher
+                onBackPressed = { onBackPressedDispatcher.onBackPressed() }
             )
         }
     ) { paddingValues ->
@@ -98,7 +98,7 @@ fun RegisterScreen(
                 CustomEditText(
                     value = registerUI.username,
                     onValueChange = {
-                        viewModel.onEvent(RegisterActions.UsernameTextChanged(it))
+                        viewModel.onEvent(RegisterEvents.UsernameTextChanged(it))
                     },
                     placeholder = "nome de usuário"
                 )
@@ -106,7 +106,7 @@ fun RegisterScreen(
                 CustomEditText(
                     value = registerUI.fullName,
                     onValueChange = {
-                        viewModel.onEvent(RegisterActions.FullNameTextChanged(it))
+                        viewModel.onEvent(RegisterEvents.FullNameTextChanged(it))
                     },
                     placeholder = "nome completo"
                 )
@@ -114,11 +114,11 @@ fun RegisterScreen(
                 CustomEditText(
                     value = registerUI.password,
                     onValueChange = {
-                        viewModel.onEvent(RegisterActions.PasswordTextChanged(it))
+                        viewModel.onEvent(RegisterEvents.PasswordTextChanged(it))
                     },
                     placeholder = "senha",
                     trailingIcon = {
-                        IconButton(onClick = { viewModel.onEvent(RegisterActions.ShowPassword) }) {
+                        IconButton(onClick = { viewModel.onEvent(RegisterEvents.ShowPassword) }) {
                             Icon(
                                 imageVector = if (registerUI.isPasswordVisible)
                                     Icons.Default.VisibilityOff
@@ -137,7 +137,7 @@ fun RegisterScreen(
                 Spacer(modifier = Modifier.height(64.dp))
                 CustomLargeButton(
                     text = "Cadastrar",
-                    onClick = { viewModel.onEvent(RegisterActions.ToggleRegister) }
+                    onClick = { viewModel.onEvent(RegisterEvents.ToggleRegister) }
                 )
             }
         }

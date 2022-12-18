@@ -15,10 +15,10 @@ import androidx.navigation.NavHostController
 import br.com.lighttasks.presentation.compose.components.CustomLargeButton
 import br.com.lighttasks.presentation.compose.components.dialog.LoadingDialog
 import br.com.lighttasks.presentation.compose.navigation.Screens
-import br.com.lighttasks.presentation.compose.widgets.CustomEditText
-import br.com.lighttasks.presentation.compose.widgets.TopBar
+import br.com.lighttasks.presentation.compose.widgets.edit_text.CustomEditText
+import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.login.ui.LoginActions
+import br.com.lighttasks.presentation.screens.login.ui.LoginEvents
 import br.com.lighttasks.presentation.screens.ui.CommonEvents
 import br.com.lighttasks.presentation.screens.login.ui.LoginUI
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +30,7 @@ fun LoginMainScreen(
     snackbarHost: SnackbarHostState
 ) {
     val loginUI = viewModel.loginUI.value
-    val loginResponse = viewModel.loginResponse.collectAsState().value
+    val loginResponse = viewModel.loginState.collectAsState().value
     val (showLoadingDialog, setShowLoadingDialog) = remember { mutableStateOf(false) }
     LoginScreen(
         loginUI = loginUI,
@@ -102,7 +102,7 @@ fun LoginScreen(
                 CustomEditText(
                     value = loginUI.username,
                     onValueChange = {
-                        viewModel.onEvent(LoginActions.UsernameTextChanged(it))
+                        viewModel.onEvent(LoginEvents.UsernameTextChanged(it))
                     },
                     placeholder = "username"
                 )
@@ -110,11 +110,11 @@ fun LoginScreen(
                 CustomEditText(
                     value = loginUI.password,
                     onValueChange = {
-                        viewModel.onEvent(LoginActions.PasswordTextChanged(it))
+                        viewModel.onEvent(LoginEvents.PasswordTextChanged(it))
                     },
                     placeholder = "password",
                     trailingIcon = {
-                        IconButton(onClick = { viewModel.onEvent(LoginActions.ShowPassword) }) {
+                        IconButton(onClick = { viewModel.onEvent(LoginEvents.ShowPassword) }) {
                             Icon(
                                 imageVector = if (loginUI.isPasswordVisible)
                                     Icons.Default.VisibilityOff
@@ -133,7 +133,7 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(64.dp))
                 CustomLargeButton(
                     text = "Login",
-                    onClick = { viewModel.onEvent(LoginActions.ToggleLogin) }
+                    onClick = { viewModel.onEvent(LoginEvents.ToggleLogin) }
                 )
             }
             Row(

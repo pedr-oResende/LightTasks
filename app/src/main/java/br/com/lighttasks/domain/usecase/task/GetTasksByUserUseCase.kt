@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class GetTasksByUserUseCase(
     private val repository: TaskRepository
 ) {
-    operator fun invoke(id: Long): Flow<List<Task>> {
+    operator fun invoke(id: Long?): Flow<List<Task>> {
         return repository.getTasksByUser(id = id)
     }
 }

@@ -11,7 +11,7 @@ import br.com.lighttasks.domain.usecase.user.LoginUseCase
 import br.com.lighttasks.domain.validator.ValidatePassword
 import br.com.lighttasks.domain.validator.ValidateUsername
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.login.ui.LoginActions
+import br.com.lighttasks.presentation.screens.login.ui.LoginEvents
 import br.com.lighttasks.presentation.screens.ui.CommonEvents
 import br.com.lighttasks.presentation.screens.login.ui.LoginUI
 import kotlinx.coroutines.flow.*
@@ -23,8 +23,8 @@ class LoginViewModel(
     private val validatePassword: ValidatePassword
 ) : ViewModel() {
 
-    private val _loginResponse = MutableStateFlow<StateUI<BasicUser>>(StateUI.Idle())
-    val loginResponse: StateFlow<StateUI<BasicUser>> = _loginResponse
+    private val _loginState = MutableStateFlow<StateUI<BasicUser>>(StateUI.Idle())
+    val loginState: StateFlow<StateUI<BasicUser>> = _loginState
 
     private val _loginUi = mutableStateOf(LoginUI())
     val loginUI: State<LoginUI> = _loginUi
@@ -32,23 +32,23 @@ class LoginViewModel(
     private val _eventFlow = MutableSharedFlow<CommonEvents>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    fun onEvent(event: LoginActions) {
+    fun onEvent(event: LoginEvents) {
         when (event) {
-            LoginActions.ToggleLogin -> {
+            is LoginEvents.ToggleLogin -> {
                 if (validateUser())
                     doLogin()
             }
-            is LoginActions.PasswordTextChanged -> {
+            is LoginEvents.PasswordTextChanged -> {
                 _loginUi.value = loginUI.value.copy(
                     password = event.text
                 )
             }
-            is LoginActions.UsernameTextChanged -> {
+            is LoginEvents.UsernameTextChanged -> {
                 _loginUi.value = loginUI.value.copy(
                     username = event.text
                 )
             }
-            is LoginActions.ShowPassword -> {
+            is LoginEvents.ShowPassword -> {
                 _loginUi.value = loginUI.value.copy(
                     isPasswordVisible = !loginUI.value.isPasswordVisible
                 )
@@ -59,12 +59,12 @@ class LoginViewModel(
     private fun doLogin() {
         viewModelScope.launch {
             loginUseCase(getUser()).onStart {
-                _loginResponse.emit(StateUI.Processing())
+                _loginState.emit(StateUI.Processing())
             }.catch {
-                _loginResponse.emit(StateUI.Error(it.message.toString()))
+                _loginState.emit(StateUI.Error(it.message.toString()))
             }.collect {
                 it?.let { basicUser ->
-                    _loginResponse.emit(StateUI.Processed(it))
+                    _loginState.emit(StateUI.Processed(it))
                     PreferencesWrapper.instance?.setUser(basicUser)
                 }
             }

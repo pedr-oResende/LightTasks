@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.compose.widgets
+package br.com.lighttasks.presentation.compose.widgets.top_bar
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton

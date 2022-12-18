@@ -6,9 +6,13 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardDoubleArrowUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import br.com.lighttasks.commom.util.priority.getPriorityContainerColor
 import br.com.lighttasks.commom.util.priority.getPriorityOnContainerColor
+import br.com.lighttasks.domain.model.Priority
 import br.com.lighttasks.domain.model.Task
 
 @Composable
@@ -26,12 +31,7 @@ fun TaskItem(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(
-                color = if (isSystemInDarkTheme())
-                    MaterialTheme.colorScheme.background
-                else
-                    getPriorityContainerColor(priority = task.priority)
-            )
+            .background(color = MaterialTheme.colorScheme.background)
             .border(
                 width = 2.dp,
                 color = getPriorityContainerColor(priority = task.priority),
@@ -51,20 +51,31 @@ fun TaskItem(
                     text = task.name ?: "",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
-                    color = getPriorityOnContainerColor(priority = task.priority)
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = task.description ?: "",
-                    color = getPriorityOnContainerColor(priority = task.priority),
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
-            Icon(
-                imageVector = Icons.Default.ArrowForward,
-                tint = getPriorityOnContainerColor(priority = task.priority),
-                contentDescription = null
-            )
+            Row {
+                if (task.priority == Priority.High) {
+                    Icon(
+                        imageVector = Icons.Default.Error,
+                        tint = getPriorityOnContainerColor(priority = task.priority),
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                }
+                Icon(
+                    imageVector = Icons.Default.ArrowForward,
+                    tint = getPriorityOnContainerColor(priority = task.priority),
+                    contentDescription = null
+                )
+            }
+
         }
 
     }

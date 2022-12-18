@@ -9,7 +9,7 @@ import br.com.lighttasks.domain.usecase.user.RegisterUseCase
 import br.com.lighttasks.domain.validator.ValidatePassword
 import br.com.lighttasks.domain.validator.ValidateUsername
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.register.ui.RegisterActions
+import br.com.lighttasks.presentation.screens.register.ui.RegisterEvents
 import br.com.lighttasks.presentation.screens.register.ui.RegisterUI
 import br.com.lighttasks.presentation.screens.ui.CommonEvents
 import kotlinx.coroutines.flow.*
@@ -30,29 +30,29 @@ class RegisterViewModel(
     private val _eventFlow = MutableSharedFlow<CommonEvents>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    fun onEvent(events: RegisterActions) {
+    fun onEvent(events: RegisterEvents) {
         when (events) {
-            is RegisterActions.UsernameTextChanged -> {
+            is RegisterEvents.UsernameTextChanged -> {
                 _registerUI.value = registerUI.value.copy(
                     username = events.text
                 )
             }
-            is RegisterActions.FullNameTextChanged -> {
+            is RegisterEvents.FullNameTextChanged -> {
                 _registerUI.value = registerUI.value.copy(
                     fullName = events.text
                 )
             }
-            is RegisterActions.PasswordTextChanged -> {
+            is RegisterEvents.PasswordTextChanged -> {
                 _registerUI.value = registerUI.value.copy(
                     password = events.text
                 )
             }
-            is RegisterActions.ShowPassword -> {
+            is RegisterEvents.ShowPassword -> {
                 _registerUI.value = registerUI.value.copy(
                     isPasswordVisible = !registerUI.value.isPasswordVisible
                 )
             }
-            is RegisterActions.ToggleRegister -> {
+            is RegisterEvents.ToggleRegister -> {
                 if (validateUser())
                     register()
             }

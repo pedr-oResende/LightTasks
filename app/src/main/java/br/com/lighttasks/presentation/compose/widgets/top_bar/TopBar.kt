@@ -1,6 +1,5 @@
-package br.com.lighttasks.presentation.compose.widgets
+package br.com.lighttasks.presentation.compose.widgets.top_bar
 
-import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -12,7 +11,7 @@ import androidx.compose.ui.text.style.TextOverflow
 @Composable
 fun TopBar(
     title: String,
-    onBackPressedDispatcher: OnBackPressedDispatcher? = null,
+    onBackPressed: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
     TopAppBar(
@@ -20,8 +19,8 @@ fun TopBar(
             Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis)
         },
         navigationIcon = {
-            if (onBackPressedDispatcher != null) {
-                IconButton(onClick = { onBackPressedDispatcher.onBackPressed() }) {
+            if (onBackPressed != null) {
+                IconButton(onClick = { onBackPressed() }) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                 }
             }

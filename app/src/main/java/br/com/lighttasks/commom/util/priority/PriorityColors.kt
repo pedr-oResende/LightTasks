@@ -8,8 +8,8 @@ import br.com.lighttasks.domain.model.Priority
 @Composable
 fun getPriorityContainerColor(priority: Priority): Color {
     return when (priority) {
-        Priority.Low -> MaterialTheme.colorScheme.tertiaryContainer
-        Priority.Medium -> MaterialTheme.colorScheme.primaryContainer
+        Priority.Low -> MaterialTheme.colorScheme.primaryContainer
+        Priority.Medium -> MaterialTheme.colorScheme.tertiaryContainer
         Priority.High -> MaterialTheme.colorScheme.errorContainer
     }
 }
@@ -17,8 +17,8 @@ fun getPriorityContainerColor(priority: Priority): Color {
 @Composable
 fun getPriorityOnContainerColor(priority: Priority): Color {
     return when (priority) {
-        Priority.Low -> MaterialTheme.colorScheme.onTertiaryContainer
-        Priority.Medium -> MaterialTheme.colorScheme.onPrimaryContainer
+        Priority.Low -> MaterialTheme.colorScheme.onPrimaryContainer
+        Priority.Medium -> MaterialTheme.colorScheme.onTertiaryContainer
         Priority.High -> MaterialTheme.colorScheme.onErrorContainer
     }
 }

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TaskRepository {
 
-    fun getTasksByUser(id: Long): Flow<List<Task>>
+    fun getTasksByUser(id: Long?): Flow<List<Task>>
 
     fun getTaskById(id: Long): Flow<Task>
 
