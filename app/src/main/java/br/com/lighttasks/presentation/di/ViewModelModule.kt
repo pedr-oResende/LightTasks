@@ -1,6 +1,6 @@
 package br.com.lighttasks.presentation.di
 
-import br.com.lighttasks.presentation.screens.home.HomeViewModel
+import br.com.lighttasks.presentation.screens.task_list.TasksViewModel
 import br.com.lighttasks.presentation.screens.login.LoginViewModel
 import br.com.lighttasks.presentation.screens.register.RegisterViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -9,7 +9,7 @@ import org.koin.dsl.module
 val viewModelModules = module {
 
     viewModel {
-        HomeViewModel(
+        TasksViewModel(
             getTasksUseCase = get()
         )
     }

@@ -51,12 +51,12 @@ fun TaskItem(
                     text = task.name ?: "",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = task.description ?: "",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -64,7 +64,7 @@ fun TaskItem(
                 if (task.priority == Priority.High) {
                     Icon(
                         imageVector = Icons.Default.Error,
-                        tint = getPriorityOnContainerColor(priority = task.priority),
+                        tint = MaterialTheme.colorScheme.error,
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.width(16.dp))

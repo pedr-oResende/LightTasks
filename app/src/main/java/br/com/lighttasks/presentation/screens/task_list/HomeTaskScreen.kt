@@ -1,14 +1,19 @@
-package br.com.lighttasks.presentation.screens.home
+package br.com.lighttasks.presentation.screens.task_list
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.FilterAlt
+import androidx.compose.material.icons.filled.FilterAltOff
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -16,19 +21,20 @@ import androidx.navigation.NavHostController
 import br.com.lighttasks.commom.util.priority.getPriorityContainerColor
 import br.com.lighttasks.domain.model.Priority
 import br.com.lighttasks.presentation.compose.components.DefaultErrorMessage
-import br.com.lighttasks.presentation.compose.components.SmallMenuItem
+import br.com.lighttasks.presentation.compose.components.RoundedSmallButton
 import br.com.lighttasks.presentation.compose.components.TaskItem
 import br.com.lighttasks.presentation.compose.widgets.CustomSwipeRefresh
 import br.com.lighttasks.presentation.compose.widgets.top_bar.SearchTopBar
 import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.home.ui.HomeEvents
+import br.com.lighttasks.presentation.screens.task_list.ui.TasksEvents
 import com.google.accompanist.swiperefresh.SwipeRefreshState
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HomeTasksMainScreen(
     navHostController: NavHostController,
-    viewModel: HomeViewModel
+    viewModel: TasksViewModel = getViewModel()
 ) {
     val tasks = viewModel.taskList.collectAsState().value
     CustomSwipeRefresh(
@@ -49,7 +55,7 @@ fun HomeTasksMainScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTasksScreen(
-    viewModel: HomeViewModel
+    viewModel: TasksViewModel
 ) {
     val homeUI = viewModel.homeUI.value
     Scaffold(
@@ -59,39 +65,67 @@ fun HomeTasksScreen(
                     searchText = homeUI.searchText,
                     placeholderText = "Nome da tarefa",
                     onSearchTextChanged = { text ->
-                        viewModel.onEvent(HomeEvents.SearchTextChanged(text))
+                        viewModel.onEvent(TasksEvents.SearchTextChanged(text))
                     },
-                    onClearClick = { viewModel.onEvent(HomeEvents.CloseSearchBar) }
+                    onClearClick = { viewModel.onEvent(TasksEvents.CloseSearchBar) }
                 )
             } else {
                 TopBar(
                     title = "Tarefas",
                     actions = {
                         IconButton(onClick = {
-                            viewModel.onEvent(HomeEvents.OpenSearchBar)
+                            viewModel.onEvent(TasksEvents.OpenSearchBar)
                         }) {
                             Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                        }
+                        IconButton(onClick = {
+                            viewModel.onEvent(TasksEvents.ToggleFilter)
+                        }) {
+                            Icon(
+                                imageVector = if (homeUI.showPriorityFilters)
+                                    Icons.Default.FilterAltOff
+                                else
+                                    Icons.Default.FilterAlt,
+                                contentDescription = null
+                            )
                         }
                     }
                 )
             }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { }
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+            }
         }
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues = paddingValues)) {
-            LazyRow(
-                modifier = Modifier.padding(all = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+        Column(
+            modifier = Modifier
+                .padding(paddingValues = paddingValues)
+                .fillMaxSize()
+        ) {
+            AnimatedVisibility(
+                visible = homeUI.showPriorityFilters,
+                enter = expandVertically(),
+                exit = shrinkVertically()
             ) {
-                val priorities = mutableSetOf<Priority>()
-                priorities.addAll(homeUI.tasks.map { it.priority }.sortedBy { it.ordinal })
-                items(priorities.toList()) { priority ->
-                    SmallMenuItem(
-                        name = priority.toString(),
-                        onClick = {
-                            viewModel.onEvent(HomeEvents.FilterByPriority(priority))
-                        },
-                        color = getPriorityContainerColor(priority)
-                    )
+                LazyRow(
+                    modifier = Modifier.padding(all = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    val priorities = mutableSetOf<Priority>()
+                    priorities.addAll(homeUI.tasks.map { it.priority }.sortedBy { it.ordinal })
+                    items(priorities.toList()) { priority ->
+                        RoundedSmallButton(
+                            name = priority.toString(),
+                            onClick = {
+                                viewModel.onEvent(TasksEvents.FilterByPriority(priority))
+                            },
+                            color = getPriorityContainerColor(priority)
+                        )
+                    }
                 }
             }
             LazyColumn {

@@ -18,6 +18,7 @@ buildscript {
         permissions_dispatcher_ktx_version = '1.0.1'
         permissions_dispatcher_version = '4.8.0'
         gson_version = '2.9.0'
+        work_version = '2.7.1'
     }
     repositories {
         google()

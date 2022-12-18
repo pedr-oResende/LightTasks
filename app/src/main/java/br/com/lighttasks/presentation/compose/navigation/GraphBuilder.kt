@@ -5,14 +5,11 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import br.com.lighttasks.presentation.screens.home.HomeTasksMainScreen
-import br.com.lighttasks.presentation.screens.home.HomeViewModel
+import br.com.lighttasks.presentation.screens.home.HomeScreen
 import br.com.lighttasks.presentation.screens.login.LoginMainScreen
 import br.com.lighttasks.presentation.screens.login.LoginViewModel
-import br.com.lighttasks.presentation.screens.profile.ProfileScreen
 import br.com.lighttasks.presentation.screens.register.RegisterMainScreen
 import br.com.lighttasks.presentation.screens.register.RegisterViewModel
-import br.com.lighttasks.presentation.screens.teams.TeamsScreen
 import com.google.accompanist.navigation.animation.composable
 import org.koin.androidx.compose.getViewModel
 
@@ -51,16 +48,16 @@ fun NavGraphBuilder.login(
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.tasks(
-    navHostController: NavHostController
+fun NavGraphBuilder.home(
+    navHostController: NavHostController,
+    snackBarHost: SnackbarHostState
 ) {
     composable(
         route = Screens.Tasks.route
     ) {
-        val viewModel = getViewModel<HomeViewModel>()
-        HomeTasksMainScreen(
+        HomeScreen(
             navHostController = navHostController,
-            viewModel = viewModel
+            snackbarHostState = snackBarHost
         )
     }
 }
@@ -78,17 +75,6 @@ fun NavGraphBuilder.taskDetail(
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.teams(
-    navHostController: NavHostController
-) {
-    composable(
-        route = Screens.Teams.route
-    ) {
-        TeamsScreen()
-    }
-}
-
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.teamDetail(
     navHostController: NavHostController,
     onBackPressedDispatcher: OnBackPressedDispatcher
@@ -97,17 +83,5 @@ fun NavGraphBuilder.teamDetail(
         route = Screens.TeamDetail.route
     ) {
 
-    }
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.profile(
-    navHostController: NavHostController,
-    onBackPressedDispatcher: OnBackPressedDispatcher
-) {
-    composable(
-        route = Screens.Profile.route
-    ) {
-        ProfileScreen()
     }
 }
