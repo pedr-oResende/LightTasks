@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.screens.home
+package br.com.lighttasks.presentation.screens.task_list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,7 +8,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -22,13 +23,14 @@ import br.com.lighttasks.presentation.compose.widgets.CustomSwipeRefresh
 import br.com.lighttasks.presentation.compose.widgets.top_bar.SearchTopBar
 import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.home.ui.HomeEvents
+import br.com.lighttasks.presentation.screens.task_list.ui.TasksEvents
 import com.google.accompanist.swiperefresh.SwipeRefreshState
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HomeTasksMainScreen(
     navHostController: NavHostController,
-    viewModel: HomeViewModel
+    viewModel: TasksViewModel = getViewModel()
 ) {
     val tasks = viewModel.taskList.collectAsState().value
     CustomSwipeRefresh(
@@ -49,7 +51,7 @@ fun HomeTasksMainScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTasksScreen(
-    viewModel: HomeViewModel
+    viewModel: TasksViewModel
 ) {
     val homeUI = viewModel.homeUI.value
     Scaffold(
@@ -59,16 +61,16 @@ fun HomeTasksScreen(
                     searchText = homeUI.searchText,
                     placeholderText = "Nome da tarefa",
                     onSearchTextChanged = { text ->
-                        viewModel.onEvent(HomeEvents.SearchTextChanged(text))
+                        viewModel.onEvent(TasksEvents.SearchTextChanged(text))
                     },
-                    onClearClick = { viewModel.onEvent(HomeEvents.CloseSearchBar) }
+                    onClearClick = { viewModel.onEvent(TasksEvents.CloseSearchBar) }
                 )
             } else {
                 TopBar(
                     title = "Tarefas",
                     actions = {
                         IconButton(onClick = {
-                            viewModel.onEvent(HomeEvents.OpenSearchBar)
+                            viewModel.onEvent(TasksEvents.OpenSearchBar)
                         }) {
                             Icon(imageVector = Icons.Default.Search, contentDescription = null)
                         }
@@ -77,7 +79,7 @@ fun HomeTasksScreen(
             }
         }
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues = paddingValues)) {
+        Column(modifier = Modifier.padding(paddingValues = paddingValues).fillMaxSize()) {
             LazyRow(
                 modifier = Modifier.padding(all = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -88,7 +90,7 @@ fun HomeTasksScreen(
                     SmallMenuItem(
                         name = priority.toString(),
                         onClick = {
-                            viewModel.onEvent(HomeEvents.FilterByPriority(priority))
+                            viewModel.onEvent(TasksEvents.FilterByPriority(priority))
                         },
                         color = getPriorityContainerColor(priority)
                     )

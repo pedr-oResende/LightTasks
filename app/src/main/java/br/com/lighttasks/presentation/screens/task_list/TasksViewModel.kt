@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.screens.home
+package br.com.lighttasks.presentation.screens.task_list
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,15 +8,15 @@ import br.com.lighttasks.commom.util.PreferencesWrapper
 import br.com.lighttasks.domain.model.Task
 import br.com.lighttasks.domain.usecase.task.GetTasksByUserUseCase
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.home.ui.HomeEvents
-import br.com.lighttasks.presentation.screens.home.ui.HomeUI
+import br.com.lighttasks.presentation.screens.task_list.ui.HomeUI
+import br.com.lighttasks.presentation.screens.task_list.ui.TasksEvents
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class HomeViewModel(
+class TasksViewModel(
     private val getTasksUseCase: GetTasksByUserUseCase
 ) : ViewModel() {
 
@@ -30,10 +30,10 @@ class HomeViewModel(
         loadTasks()
     }
 
-    fun onEvent(event: HomeEvents) {
+    fun onEvent(event: TasksEvents) {
         event.run {
             when (this) {
-                is HomeEvents.FilterByPriority -> {
+                is TasksEvents.FilterByPriority -> {
                     homeUI.value.apply {
                         if (_homeUI.value.priorities.contains(filter)) {
                             _homeUI.value = copy(priorities = priorities.minus(filter))
@@ -43,20 +43,20 @@ class HomeViewModel(
                     }
                     filter()
                 }
-                is HomeEvents.SearchTextChanged -> {
+                is TasksEvents.SearchTextChanged -> {
                     _homeUI.value = homeUI.value.copy(
                         searchText = text
                     )
                     filter()
                 }
-                is HomeEvents.CloseSearchBar -> {
+                is TasksEvents.CloseSearchBar -> {
                     _homeUI.value = homeUI.value.copy(
                         isSearchingTask = false,
                         searchText = ""
                     )
                     filter()
                 }
-                is HomeEvents.OpenSearchBar -> {
+                is TasksEvents.OpenSearchBar -> {
                     _homeUI.value = homeUI.value.copy(
                         isSearchingTask = true
                     )
@@ -89,12 +89,8 @@ class HomeViewModel(
         homeUI.value.apply {
             _homeUI.value = copy(
                 filteredTasks = tasks
-                    .filter { task ->
-                        filterByPriority(task)
-                    }
-                    .filter { task ->
-                        filterByNameOrDescription(task)
-                    }
+                    .filter { filterByPriority(it) }
+                    .filter { filterByNameOrDescription(it) }
             )
         }
     }
