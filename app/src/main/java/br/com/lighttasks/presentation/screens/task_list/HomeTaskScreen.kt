@@ -115,9 +115,11 @@ fun HomeTasksScreen(
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        val priorities = mutableSetOf<Priority>()
-                        priorities.addAll(homeUI.tasks.map { it.priority }.sortedBy { it.ordinal })
-                        items(priorities.toList()) { priority ->
+                        val priorities = homeUI.tasks
+                            .map { it.priority }
+                            .distinct()
+                            .sortedBy { it.ordinal }
+                        items(priorities) { priority ->
                             DefaultFilterChip(
                                 name = priority.toString(),
                                 onClick = {
