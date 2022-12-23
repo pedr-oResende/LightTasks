@@ -8,6 +8,5 @@ data class HomeUI(
     val filteredTasks: List<Task> = listOf(),
     val priorities: List<Priority> = listOf(),
     val isSearchingTask: Boolean = false,
-    val searchText: String = "",
-    val showPriorityFilters: Boolean = false
+    val searchText: String = ""
 )

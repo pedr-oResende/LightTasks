@@ -1,9 +1,7 @@
 package br.com.lighttasks.presentation.screens.task_list
 
 import androidx.compose.animation.*
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -12,17 +10,15 @@ import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.FilterAltOff
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.lighttasks.commom.util.priority.getPriorityContainerColor
 import br.com.lighttasks.domain.model.Priority
 import br.com.lighttasks.presentation.compose.components.DefaultErrorMessage
-import br.com.lighttasks.presentation.compose.components.RoundedSmallButton
-import br.com.lighttasks.presentation.compose.components.TaskItem
+import br.com.lighttasks.presentation.compose.components.DefaultFilterChip
+import br.com.lighttasks.presentation.compose.components.task.TaskList
 import br.com.lighttasks.presentation.compose.widgets.CustomSwipeRefresh
 import br.com.lighttasks.presentation.compose.widgets.top_bar.SearchTopBar
 import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
@@ -58,6 +54,7 @@ fun HomeTasksScreen(
     viewModel: TasksViewModel
 ) {
     val homeUI = viewModel.homeUI.value
+    var filtersVisibility by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             if (homeUI.isSearchingTask) {
@@ -79,10 +76,11 @@ fun HomeTasksScreen(
                             Icon(imageVector = Icons.Default.Search, contentDescription = null)
                         }
                         IconButton(onClick = {
-                            viewModel.onEvent(TasksEvents.ToggleFilter)
+                            filtersVisibility = !filtersVisibility
+                            viewModel.resetFilters()
                         }) {
                             Icon(
-                                imageVector = if (homeUI.showPriorityFilters)
+                                imageVector = if (filtersVisibility)
                                     Icons.Default.FilterAltOff
                                 else
                                     Icons.Default.FilterAlt,
@@ -107,40 +105,35 @@ fun HomeTasksScreen(
                 .fillMaxSize()
         ) {
             AnimatedVisibility(
-                visible = homeUI.showPriorityFilters,
+                visible = filtersVisibility,
                 enter = expandVertically(),
                 exit = shrinkVertically()
             ) {
-                LazyRow(
-                    modifier = Modifier.padding(all = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                Column(
+                    modifier = Modifier.padding(all = 16.dp)
                 ) {
-                    val priorities = mutableSetOf<Priority>()
-                    priorities.addAll(homeUI.tasks.map { it.priority }.sortedBy { it.ordinal })
-                    items(priorities.toList()) { priority ->
-                        RoundedSmallButton(
-                            name = priority.toString(),
-                            onClick = {
-                                viewModel.onEvent(TasksEvents.FilterByPriority(priority))
-                            },
-                            color = getPriorityContainerColor(priority)
-                        )
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        val priorities = mutableSetOf<Priority>()
+                        priorities.addAll(homeUI.tasks.map { it.priority }.sortedBy { it.ordinal })
+                        items(priorities.toList()) { priority ->
+                            DefaultFilterChip(
+                                name = priority.toString(),
+                                onClick = {
+                                    viewModel.onEvent(TasksEvents.FilterByPriority(priority))
+                                },
+                                color = getPriorityContainerColor(priority)
+                            )
+                        }
                     }
                 }
             }
-            LazyColumn {
-                item { Spacer(modifier = Modifier.height(8.dp)) }
-                items(homeUI.filteredTasks) { task ->
-                    TaskItem(
-                        modifier = Modifier
-                            .padding(vertical = 8.dp, horizontal = 16.dp)
-                            .clip(shape = MaterialTheme.shapes.medium)
-                            .clickable { },
-                        task = task
-                    )
-                }
-                item { Spacer(modifier = Modifier.height(8.dp)) }
-            }
+            TaskList(
+                tasks = homeUI.filteredTasks,
+                onItemClick = { },
+                onItemLongClick = { }
+            )
         }
     }
 }

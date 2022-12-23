@@ -61,15 +61,15 @@ class TasksViewModel(
                         isSearchingTask = true
                     )
                 }
-                TasksEvents.ToggleFilter -> {
-                    _homeUI.value = homeUI.value.copy(
-                        showPriorityFilters = !homeUI.value.showPriorityFilters,
-                        priorities = emptyList(),
-                        filteredTasks = homeUI.value.tasks
-                    )
-                }
             }
         }
+    }
+
+    fun resetFilters() {
+        _homeUI.value = homeUI.value.copy(
+            priorities = emptyList(),
+            filteredTasks = homeUI.value.tasks
+        )
     }
 
 
