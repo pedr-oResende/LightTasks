@@ -1,5 +1,9 @@
 package br.com.lighttasks.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Task(
     val id: Long?,
     val name: String?,
@@ -10,7 +14,7 @@ data class Task(
     val responsibleId: Long?,
     val isDone: Boolean?,
     val priority: Priority
-)
+) : Parcelable
 
 val tasks = listOf(
     Task(

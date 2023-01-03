@@ -15,9 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.lighttasks.commom.util.priority.getPriorityContainerColor
+import br.com.lighttasks.domain.model.Task
 import br.com.lighttasks.presentation.compose.components.DefaultErrorMessage
 import br.com.lighttasks.presentation.compose.components.DefaultFilterChip
 import br.com.lighttasks.presentation.compose.components.task.TaskList
+import br.com.lighttasks.presentation.compose.navigation.Screens
 import br.com.lighttasks.presentation.compose.widgets.CustomSwipeRefresh
 import br.com.lighttasks.presentation.compose.widgets.top_bar.SearchTopBar
 import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
@@ -41,7 +43,10 @@ fun HomeTasksMainScreen(
             is StateUI.Error -> DefaultErrorMessage(message = "Ocorreu um erro inesperado")
             is StateUI.Idle -> Unit
             is StateUI.Processed -> {
-                HomeTasksScreen(viewModel = viewModel)
+                HomeTasksScreen(
+                    viewModel = viewModel,
+                    navHostController = navHostController
+                )
             }
         }
     }
@@ -50,7 +55,8 @@ fun HomeTasksMainScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTasksScreen(
-    viewModel: TasksViewModel
+    viewModel: TasksViewModel,
+    navHostController: NavHostController
 ) {
     val homeUI = viewModel.homeUI.value
     var filtersVisibility by remember { mutableStateOf(false) }
@@ -130,10 +136,19 @@ fun HomeTasksScreen(
                     }
                 }
             }
+            val onItemClick: (Task) -> Unit = { task ->
+                Screens.TaskDetail.navigateWithArgument(
+                    navHostController = navHostController,
+                    argumentValue = task
+                )
+            }
+            val onItemLongClick: (Task) -> Unit = { task ->
+
+            }
             TaskList(
                 tasks = homeUI.filteredTasks,
-                onItemClick = { },
-                onItemLongClick = { }
+                onItemClick = onItemClick,
+                onItemLongClick = onItemLongClick
             )
         }
     }

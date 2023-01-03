@@ -10,6 +10,7 @@ import br.com.lighttasks.presentation.screens.login.LoginMainScreen
 import br.com.lighttasks.presentation.screens.login.LoginViewModel
 import br.com.lighttasks.presentation.screens.register.RegisterMainScreen
 import br.com.lighttasks.presentation.screens.register.RegisterViewModel
+import br.com.lighttasks.presentation.screens.task_detail.TaskDetailMainScreen
 import com.google.accompanist.navigation.animation.composable
 import org.koin.androidx.compose.getViewModel
 
@@ -70,7 +71,10 @@ fun NavGraphBuilder.taskDetail(
     composable(
         route = Screens.TaskDetail.route
     ) {
-
+        TaskDetailMainScreen(
+            navHostController = navHostController,
+            onBackPressedDispatcher = onBackPressedDispatcher
+        )
     }
 }
 
