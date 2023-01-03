@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.lighttasks.commom.extensions.containsIgnoringAccent
 import br.com.lighttasks.commom.util.PreferencesWrapper
 import br.com.lighttasks.domain.model.Task
 import br.com.lighttasks.domain.usecase.task.GetTasksByUserUseCase
@@ -112,8 +113,8 @@ class TasksViewModel(
 
     private fun filterByNameOrDescription(task: Task) = _homeUI.value.run {
         if (searchText.isNotBlank()) {
-            task.name?.contains(searchText, ignoreCase = true) == true
-                    || task.description?.contains(searchText, ignoreCase = true) == true
+            task.name?.containsIgnoringAccent(searchText, ignoreCase = true) == true
+                    || task.description?.containsIgnoringAccent(searchText, ignoreCase = true) == true
         } else {
             true
         }
