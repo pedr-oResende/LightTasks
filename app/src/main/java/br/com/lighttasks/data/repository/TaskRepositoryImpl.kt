@@ -2,12 +2,12 @@ package br.com.lighttasks.data.repository
 
 import br.com.lighttasks.commom.mapper.Mapper
 import br.com.lighttasks.commom.mapper.NullableListMapper
+import br.com.lighttasks.commom.util.PreferencesWrapper
 import br.com.lighttasks.data.data_source.task.TaskRemoteDataSource
 import br.com.lighttasks.data.remote.model.tasks.TaskRequest
 import br.com.lighttasks.data.remote.model.tasks.TaskResponse
 import br.com.lighttasks.data.remote.util.apiCall
 import br.com.lighttasks.domain.model.Task
-import br.com.lighttasks.domain.model.tasks
 import br.com.lighttasks.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -24,7 +24,8 @@ class TaskRepositoryImpl(
 //                val response = taskRemoteDataSource.getTasksByUser(id = id)
 //                val mappedResponse = taskResponseListToEntityMapper.map(response)
 //                emit(mappedResponse)
-                emit(tasks)
+                val user = PreferencesWrapper.getInstance()?.getUser()
+                emit(user?.tasks.orEmpty())
             }
         }
     }

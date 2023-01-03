@@ -21,8 +21,8 @@ val tasks = listOf(
         responsibleId = 1,
         isDone = false,
         createdAt = "2022-11-22",
-        deadline = "2022-12-22",
-        priority = Priority.getPriority("2022-12-22")
+        deadline = "2023-01-04",
+        priority = Priority.getPriority("2023-01-04")
     ),
     Task(
         id = 2,
@@ -32,8 +32,8 @@ val tasks = listOf(
         responsibleId = 1,
         isDone = false,
         createdAt = "2022-11-22",
-        deadline = "2022-12-25",
-        priority = Priority.getPriority("2022-12-25")
+        deadline = "2023-01-03",
+        priority = Priority.getPriority("2023-01-03")
     ),
     Task(
         id = 3,
@@ -43,7 +43,7 @@ val tasks = listOf(
         responsibleId = 1,
         isDone = false,
         createdAt = "2022-11-22",
-        deadline = "2022-12-02",
-        priority = Priority.getPriority("2022-12-02")
+        deadline = "2023-01-30",
+        priority = Priority.getPriority("2023-01-30")
     )
 )
