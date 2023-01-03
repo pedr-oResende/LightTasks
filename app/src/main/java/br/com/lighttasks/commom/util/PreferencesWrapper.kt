@@ -106,7 +106,13 @@ class PreferencesWrapper(context: Context) {
             }
         }
 
-        var instance: PreferencesWrapper? = null
+        fun getInstance(): PreferencesWrapper? {
+            checkNotNull(preferencesWrapper) {
+                "Preferences Wrapper wasn't initialized. " +
+                        "Call initPreferences(Context context) to initialize this."
+            }
+            return preferencesWrapper
+        }
     }
 
     init {

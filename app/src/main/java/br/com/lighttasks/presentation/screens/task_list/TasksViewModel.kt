@@ -75,7 +75,7 @@ class TasksViewModel(
 
     private fun loadTasks() {
         viewModelScope.launch {
-            val userId = PreferencesWrapper.instance?.basicUser?.id
+            val userId = PreferencesWrapper.getInstance()?.basicUser?.id
             getTasksUseCase(userId).onStart {
                 _taskList.emit(StateUI.Processing())
             }.catch {

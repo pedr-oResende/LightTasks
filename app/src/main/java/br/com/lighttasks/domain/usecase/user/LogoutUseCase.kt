@@ -8,7 +8,7 @@ class LogoutUseCase(
     private val repository: UserRepository
 ) {
     operator fun invoke(id: Long): Flow<Unit?> {
-        PreferencesWrapper.instance?.clearPreferences()
+        PreferencesWrapper.getInstance()?.clearPreferences()
         return repository.logout(id)
     }
 }

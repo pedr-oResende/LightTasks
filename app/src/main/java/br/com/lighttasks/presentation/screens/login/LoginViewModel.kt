@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.lighttasks.commom.util.PreferencesKey
 import br.com.lighttasks.commom.util.PreferencesWrapper
 import br.com.lighttasks.domain.model.BasicUser
 import br.com.lighttasks.domain.model.User
@@ -65,7 +66,10 @@ class LoginViewModel(
             }.collect {
                 it?.let { basicUser ->
                     _loginState.emit(StateUI.Processed(it))
-                    PreferencesWrapper.instance?.setUser(basicUser)
+                    PreferencesWrapper.getInstance()?.apply {
+                        putBoolean(PreferencesKey.IS_LOGGED_IN_KEY, true)
+                        setUser(basicUser)
+                    }
                 }
             }
         }
