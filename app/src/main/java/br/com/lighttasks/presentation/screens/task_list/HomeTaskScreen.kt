@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.lighttasks.commom.util.priority.getPriorityContainerColor
 import br.com.lighttasks.domain.model.Task
-import br.com.lighttasks.presentation.compose.components.DefaultErrorMessage
+import br.com.lighttasks.presentation.compose.components.state.error.DefaultErrorMessage
 import br.com.lighttasks.presentation.compose.components.DefaultFilterChip
 import br.com.lighttasks.presentation.compose.components.task.TaskList
 import br.com.lighttasks.presentation.compose.navigation.Screens

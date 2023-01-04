@@ -96,8 +96,7 @@ fun LoginScreen(
             ) {
                 LoadingDialog(
                     showDialog = showLoadingDialog,
-                    text = "Fazendo login",
-                    onDismissRequest = { }
+                    text = "Fazendo login"
                 )
                 CustomEditText(
                     value = loginUI.username,

@@ -6,7 +6,9 @@ import br.com.lighttasks.data.remote.model.basic_users.BasicUserRequest
 import br.com.lighttasks.data.remote.model.basic_users.BasicUserResponse
 import br.com.lighttasks.data.remote.util.apiCall
 import br.com.lighttasks.domain.model.BasicUser
+import br.com.lighttasks.domain.model.users
 import br.com.lighttasks.domain.repository.BasicUserRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -16,12 +18,15 @@ class BasicUserRepositoryImpl(
     private val basicUserResponseToEntityMapper: Mapper<BasicUserResponse, BasicUser>,
 ) : BasicUserRepository {
 
-    override fun getBasicUserById(id: Long): Flow<BasicUser> {
+    override fun getBasicUserById(id: Long?): Flow<BasicUser> {
         return flow {
             apiCall {
-                val response = basicUserRemoteDataSource.getBasicUserById(id)
-                val responseMapped = basicUserResponseToEntityMapper.map(response)
-                emit(responseMapped)
+//                val response = basicUserRemoteDataSource.getBasicUserById(id)
+//                val responseMapped = basicUserResponseToEntityMapper.map(response)
+//                emit(responseMapped)
+                val user = users.first { it.id == id }
+                delay(1000L)
+                emit(user)
             }
         }
     }

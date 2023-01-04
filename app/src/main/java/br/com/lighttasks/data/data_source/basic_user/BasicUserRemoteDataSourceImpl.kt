@@ -9,7 +9,7 @@ class BasicUserRemoteDataSourceImpl(
     private val service: BasicUserService
 ) : BasicUserRemoteDataSource {
 
-    override fun getBasicUserById(id: Long): BasicUserResponse {
+    override fun getBasicUserById(id: Long?): BasicUserResponse {
         val response = service.getBasicUserById(id = id)
         if (response.isSuccessful)
             return response.body()!!

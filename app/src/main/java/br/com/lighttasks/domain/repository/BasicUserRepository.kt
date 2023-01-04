@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface BasicUserRepository {
 
-    fun getBasicUserById(id: Long): Flow<BasicUser>
+    fun getBasicUserById(id: Long?): Flow<BasicUser>
 
     fun editBasicUser(basicUser: BasicUser): Flow<BasicUser>
 

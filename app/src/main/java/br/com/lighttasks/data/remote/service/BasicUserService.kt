@@ -11,7 +11,7 @@ import retrofit2.http.Path
 interface BasicUserService {
 
     @GET("/basic_users/{id}")
-    fun getBasicUserById(@Path("id") id: Long): Response<BasicUserResponse>
+    fun getBasicUserById(@Path("id") id: Long?): Response<BasicUserResponse>
 
     @PUT("/basic_users/{id}")
     fun editBasicUser(@Path("id") id: Long, @Body basicUser: BasicUserRequest): Response<BasicUserResponse>

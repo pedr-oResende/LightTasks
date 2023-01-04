@@ -9,6 +9,7 @@ import br.com.lighttasks.data.remote.model.tasks.TaskResponse
 import br.com.lighttasks.data.remote.util.apiCall
 import br.com.lighttasks.domain.model.Task
 import br.com.lighttasks.domain.repository.TaskRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -25,6 +26,7 @@ class TaskRepositoryImpl(
 //                val mappedResponse = taskResponseListToEntityMapper.map(response)
 //                emit(mappedResponse)
                 val user = PreferencesWrapper.getInstance()?.getUser()
+                delay(1000L)
                 emit(user?.tasks.orEmpty())
             }
         }
@@ -55,12 +57,14 @@ class TaskRepositoryImpl(
     override fun editTask(task: Task): Flow<Task> {
         return flow {
             apiCall {
-                val response = taskRemoteDataSource.editTask(
-                    id = task.id!!,
-                    task = taskEntityToRequestMapper.map(task)
-                )
-                val mappedResponse = taskResponseToEntityMapper.map(response)
-                emit(mappedResponse)
+//                val response = taskRemoteDataSource.editTask(
+//                    id = task.id!!,
+//                    task = taskEntityToRequestMapper.map(task)
+//                )
+//                val mappedResponse = taskResponseToEntityMapper.map(response)
+//                emit(mappedResponse)
+                delay(1000L)
+                emit(task)
             }
         }
     }

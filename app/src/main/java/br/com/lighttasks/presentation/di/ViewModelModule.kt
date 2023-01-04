@@ -32,7 +32,10 @@ val viewModelModules = module {
     }
 
     viewModel {
-        TaskDetailViewModel()
+        TaskDetailViewModel(
+            getBasicUserUseCase = get(),
+            editTaskUseCase = get()
+        )
     }
 
 }

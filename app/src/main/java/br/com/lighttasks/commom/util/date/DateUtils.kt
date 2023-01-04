@@ -7,14 +7,17 @@ import java.util.*
 
 class DateUtils {
     companion object {
+        private const val SERVER_PATTERN = "yyyy-MM-dd"
+        private const val CLIENT_PATTERN = "dd/MM/yyyy"
+
         private fun getCurrentDate(): String? {
-            val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val dtf = DateTimeFormatter.ofPattern(SERVER_PATTERN)
             return LocalDateTime.now().format(dtf)
         }
 
         fun daysBetweenDates(second: String?, first: String = getCurrentDate().toString()): Long? {
             if (second == null) return null
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            val sdf = SimpleDateFormat(SERVER_PATTERN, Locale.US)
             val firstDate = sdf.parse(first)!!
             val secondDate = sdf.parse(second)!!
             val difference = secondDate.time - firstDate.time
@@ -23,5 +26,15 @@ class DateUtils {
             val hours = minutes / 60
             return (hours / 24) + 1
         }
+
+        fun getClientPatternDate(date: String?): String {
+            if (date == null) return ""
+            val sdf = SimpleDateFormat(SERVER_PATTERN, Locale.US)
+            val serverPatterDate = sdf.parse(date) ?: return ""
+            sdf.applyPattern(CLIENT_PATTERN)
+            val clientPatternDate = sdf.format(serverPatterDate)
+            return clientPatternDate.toString()
+        }
+
     }
 }

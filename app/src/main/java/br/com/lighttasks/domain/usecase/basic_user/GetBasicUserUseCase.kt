@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class GetBasicUserUseCase(
     private val repository: BasicUserRepository
 ) {
-    operator fun invoke(id: Long): Flow<BasicUser> {
+    operator fun invoke(id: Long?): Flow<BasicUser> {
         return repository.getBasicUserById(id = id)
     }
 }

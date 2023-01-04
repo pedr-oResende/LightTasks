@@ -92,8 +92,7 @@ fun RegisterScreen(
             ) {
                 LoadingDialog(
                     showDialog = showLoadingDialog,
-                    text = "Realizando cadastro",
-                    onDismissRequest = { }
+                    text = "Realizando cadastro"
                 )
                 CustomEditText(
                     value = registerUI.username,

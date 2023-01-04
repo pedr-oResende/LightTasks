@@ -1,21 +1,13 @@
 package br.com.lighttasks.presentation.compose.components.dialog
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import br.com.lighttasks.presentation.compose.components.CustomLargeButton
 
 @Composable
 fun DefaultAlertDialog(
+    title: String,
     text: String,
     buttonText: String,
     onClick: () -> Unit,
@@ -23,36 +15,25 @@ fun DefaultAlertDialog(
     setShowDialog: (Boolean) -> Unit
 ) {
     if (showDialog) {
-        Dialog(
+        AlertDialog(
             onDismissRequest = { setShowDialog(false) },
-        ) {
-            Surface(
-                color = MaterialTheme.colorScheme.surface,
-                shape = MaterialTheme.shapes.medium
-            ) {
-                Column(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = text,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp,
-                        modifier = Modifier.padding(vertical = 8.dp),
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.padding(24.dp))
-                    CustomLargeButton(
-                        text = buttonText,
-                        onClick = {
-                            onClick()
-                            setShowDialog(false)
-                        },
-                        color = MaterialTheme.colorScheme.primary
-                    )
+            title = { Text(text = title) },
+            text = { Text(text = text) },
+            confirmButton = {
+                TextButton(onClick = {
+                    setShowDialog(false)
+                    onClick()
+                }) {
+                    Text(text = buttonText)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    setShowDialog(false)
+                }) {
+                    Text(text = "Cancelar")
                 }
             }
-        }
+        )
     }
 }
