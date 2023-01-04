@@ -4,7 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,8 +27,8 @@ fun LoadingDialog(showDialog: Boolean, text: String) {
         ) {
             Surface(
                 modifier = Modifier.size(150.dp),
-                color = AlertDialogDefaults.containerColor,
-                shape = AlertDialogDefaults.shape
+                color = MaterialTheme.colorScheme.surface,
+                shape = MaterialTheme.shapes.extraLarge
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp),
@@ -37,7 +40,7 @@ fun LoadingDialog(showDialog: Boolean, text: String) {
                         modifier = Modifier.padding(top = 16.dp),
                         text = text,
                         textAlign = TextAlign.Center,
-                        color = AlertDialogDefaults.titleContentColor
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }

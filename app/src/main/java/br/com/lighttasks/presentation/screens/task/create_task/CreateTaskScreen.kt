@@ -1,31 +1,26 @@
 package br.com.lighttasks.presentation.screens.task.create_task
 
-import android.app.DatePickerDialog
-import android.widget.DatePicker
 import androidx.activity.OnBackPressedDispatcher
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.lighttasks.commom.util.date.DateUtils
-import br.com.lighttasks.presentation.compose.widgets.date_picker.DatePicker
+import br.com.lighttasks.presentation.compose.widgets.date_picker.DefaultDatePicker
 import br.com.lighttasks.presentation.compose.widgets.edit_text.FormEditText
 import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
 import br.com.lighttasks.presentation.screens.task.create_task.ui.CreateTaskEvents
-import java.text.DecimalFormat
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +42,7 @@ fun CreateTaskScreen(
             )
         }
     ) { paddingValues ->
-        val (showDatePicker, setShowDatePicker) = remember { mutableStateOf(false) }
+        val (showDatePicker, setShowDatePicker) = rememberSaveable { mutableStateOf(false) }
         Column(
             modifier = Modifier
                 .padding(paddingValues = paddingValues)
@@ -84,7 +79,7 @@ fun CreateTaskScreen(
                     }
                 }
             )
-            DatePicker(
+            DefaultDatePicker(
                 showDatePicker = showDatePicker,
                 setShowDatePicker = setShowDatePicker
             ) { date ->

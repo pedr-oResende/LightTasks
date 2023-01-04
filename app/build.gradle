@@ -77,6 +77,9 @@ dependencies {
     implementation "com.google.accompanist:accompanist-appcompat-theme:$accompanist_compose_version"
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_compose_version"
     implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_compose_version"
+    implementation "com.google.accompanist:accompanist-pager:$compose_pager_version"
+
+    // Material 3
     implementation "androidx.compose.material3:material3:1.1.0-alpha03"
 
     testImplementation 'junit:junit:4.13.2'
@@ -122,7 +125,4 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_version"
 
     implementation 'org.apache.commons:commons-text:1.9'
-
-    // Date picker
-    implementation 'com.google.android.material:material:1.7.0'
 }
