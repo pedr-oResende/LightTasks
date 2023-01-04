@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.screens.task_list.ui
+package br.com.lighttasks.presentation.screens.task.task_list.ui
 
 import br.com.lighttasks.domain.model.Priority
 

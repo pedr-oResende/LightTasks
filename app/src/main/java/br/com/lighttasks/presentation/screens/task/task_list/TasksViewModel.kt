@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.screens.task_list
+package br.com.lighttasks.presentation.screens.task.task_list
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -9,8 +9,8 @@ import br.com.lighttasks.commom.util.PreferencesWrapper
 import br.com.lighttasks.domain.model.Task
 import br.com.lighttasks.domain.usecase.task.GetTasksByUserUseCase
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.task_list.ui.HomeUI
-import br.com.lighttasks.presentation.screens.task_list.ui.TasksEvents
+import br.com.lighttasks.presentation.screens.task.task_list.ui.HomeUI
+import br.com.lighttasks.presentation.screens.task.task_list.ui.TasksEvents
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -76,7 +76,7 @@ class TasksViewModel(
 
     private fun loadTasks() {
         viewModelScope.launch {
-            val userId = PreferencesWrapper.getInstance()?.basicUser?.id
+            val userId = PreferencesWrapper.getInstance()?.getUser()?.id
             getTasksUseCase(userId).onStart {
                 _taskList.emit(StateUI.Processing())
             }.catch {

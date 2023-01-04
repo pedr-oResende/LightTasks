@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.screens.task_detail
+package br.com.lighttasks.presentation.screens.task.task_detail
 
 import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.foundation.background
@@ -84,7 +84,14 @@ fun TaskDetailScreen(
                 },
                 actions = {
                     IconButton(onClick = {
-
+                        val screen = if (taskDetailUI.task?.teamId == null)
+                            Screens.CreatePersonalTask
+                        else
+                            Screens.CreateTaskForTeamMember
+                        screen.navigateWithArgument(
+                            navHostController = navHostController,
+                            argumentValue = taskDetailUI.task
+                        )
                     }) {
                         Icon(
                             imageVector = Icons.Default.Edit,
@@ -162,7 +169,7 @@ fun TaskDetailScreen(
                 }
             )
             viewModel.finishTaskResponse.collectAsState().value.let { response ->
-                when(response) {
+                when (response) {
                     is StateUI.Error -> {
                         showLoadingDialog = false
                     }

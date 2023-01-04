@@ -58,6 +58,16 @@ sealed class Screens(val route: String, val argumentKey: String) {
         argumentKey = "task_detail_argument"
     )
 
+    object CreateTaskForTeamMember : Screens(
+        route = "create_task_for_team_member",
+        argumentKey = "create_task_for_team_member_argument"
+    )
+
+    object CreatePersonalTask : Screens(
+        route = "create_personal_task",
+        argumentKey = "create_personal_task_argument"
+    )
+
     object Teams : Screens(
         route = "groups?groups_argument={groups_argument}",
         argumentKey = "groups_argument"

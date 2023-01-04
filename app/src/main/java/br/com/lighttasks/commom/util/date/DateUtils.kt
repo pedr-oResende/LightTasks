@@ -28,12 +28,37 @@ class DateUtils {
         }
 
         fun getClientPatternDate(date: String?): String {
-            if (date == null) return ""
+            if (date.isNullOrBlank()) return ""
             val sdf = SimpleDateFormat(SERVER_PATTERN, Locale.US)
             val serverPatterDate = sdf.parse(date) ?: return ""
             sdf.applyPattern(CLIENT_PATTERN)
             val clientPatternDate = sdf.format(serverPatterDate)
             return clientPatternDate.toString()
+        }
+
+        fun getServerPatternDate(date: String?): String {
+            if (date.isNullOrBlank()) return ""
+            val sdf = SimpleDateFormat(CLIENT_PATTERN, Locale.US)
+            val clientPatternDate = sdf.parse(date) ?: return ""
+            sdf.applyPattern(SERVER_PATTERN)
+            val serverPatterDate = sdf.format(clientPatternDate)
+            return serverPatterDate.toString()
+        }
+
+        fun getString(date: Long, format: String?): String? {
+            val d = Date(date)
+            return getString(d, format)
+        }
+
+        fun getString(date: Date?, format: String?): String? {
+            val sdf = SimpleDateFormat(format, Locale("pt", "Br"))
+            return sdf.format(date)
+        }
+
+        fun getString(date: Calendar?, format: String?): String? {
+            return if (date == null) {
+                ""
+            } else getString(date.time, format)
         }
 
     }

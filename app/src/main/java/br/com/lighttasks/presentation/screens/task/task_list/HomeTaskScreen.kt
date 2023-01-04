@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.screens.task_list
+package br.com.lighttasks.presentation.screens.task.task_list
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
@@ -24,7 +24,7 @@ import br.com.lighttasks.presentation.compose.widgets.CustomSwipeRefresh
 import br.com.lighttasks.presentation.compose.widgets.top_bar.SearchTopBar
 import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.task_list.ui.TasksEvents
+import br.com.lighttasks.presentation.screens.task.task_list.ui.TasksEvents
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import org.koin.androidx.compose.getViewModel
 
@@ -98,7 +98,9 @@ fun HomeTasksScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { }
+                onClick = {
+                    navHostController.navigate(Screens.CreatePersonalTask.route)
+                }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }

@@ -65,6 +65,14 @@ fun MainScreen(
                     navHostController = navHostController,
                     onBackPressedDispatcher = onBackPressedDispatcher
                 )
+                createPersonalTask(
+                    navHostController = navHostController,
+                    onBackPressedDispatcher = onBackPressedDispatcher
+                )
+                createTaskForTeamMember(
+                    navHostController = navHostController,
+                    onBackPressedDispatcher = onBackPressedDispatcher
+                )
                 teamDetail(
                     navHostController = navHostController,
                     onBackPressedDispatcher = onBackPressedDispatcher

@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.screens.task_detail.ui
+package br.com.lighttasks.presentation.screens.task.task_detail.ui
 
 import br.com.lighttasks.domain.model.BasicUser
 import br.com.lighttasks.domain.model.Task

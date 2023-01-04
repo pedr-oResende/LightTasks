@@ -1,4 +1,4 @@
-package br.com.lighttasks.presentation.screens.task_detail
+package br.com.lighttasks.presentation.screens.task.task_detail
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -9,7 +9,7 @@ import br.com.lighttasks.domain.model.Task
 import br.com.lighttasks.domain.usecase.basic_user.GetBasicUserUseCase
 import br.com.lighttasks.domain.usecase.task.EditTaskUseCase
 import br.com.lighttasks.presentation.model.StateUI
-import br.com.lighttasks.presentation.screens.task_detail.ui.TaskDetailUI
+import br.com.lighttasks.presentation.screens.task.task_detail.ui.TaskDetailUI
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

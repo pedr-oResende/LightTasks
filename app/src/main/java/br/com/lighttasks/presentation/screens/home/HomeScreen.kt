@@ -18,7 +18,7 @@ import androidx.navigation.NavHostController
 import br.com.lighttasks.presentation.compose.components.DefaultNavigationBar
 import br.com.lighttasks.presentation.compose.navigation.Screens
 import br.com.lighttasks.presentation.model.NavigationBarItem
-import br.com.lighttasks.presentation.screens.task_list.HomeTasksMainScreen
+import br.com.lighttasks.presentation.screens.task.task_list.HomeTasksMainScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
