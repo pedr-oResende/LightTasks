@@ -26,20 +26,20 @@ import br.com.lighttasks.presentation.compose.navigation.Screens
 import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
 import br.com.lighttasks.presentation.model.StateUI
 import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun TaskDetailMainScreen(
     navHostController: NavHostController,
-    viewModel: TaskDetailViewModel = getViewModel(),
-    onBackPressedDispatcher: OnBackPressedDispatcher
-) {
-    LaunchedEffect(key1 = true) {
-        viewModel.loadTask(
-            task = navHostController.previousBackStackEntry?.savedStateHandle?.getArgument<Task>(
+    viewModel: TaskDetailViewModel = getViewModel {
+        parametersOf(
+            navHostController.previousBackStackEntry?.savedStateHandle?.getArgument<Task>(
                 key = Screens.TaskDetail.argumentKey
             )
         )
-    }
+    },
+    onBackPressedDispatcher: OnBackPressedDispatcher
+) {
     var isLoading by remember { mutableStateOf(false) }
     TaskDetailScreen(
         navHostController = navHostController,

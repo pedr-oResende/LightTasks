@@ -18,7 +18,7 @@ class BasicUserRepositoryImpl(
     private val basicUserResponseToEntityMapper: Mapper<BasicUserResponse, BasicUser>,
 ) : BasicUserRepository {
 
-    override fun getBasicUserById(id: Long?): Flow<BasicUser> {
+    override fun getBasicUserById(id: Long): Flow<BasicUser> {
         return flow {
             apiCall {
 //                val response = basicUserRemoteDataSource.getBasicUserById(id)

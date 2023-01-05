@@ -34,7 +34,7 @@ class DateUtils {
             val serverPatterDate = sdf.parse(date) ?: return ""
             sdf.applyPattern(CLIENT_PATTERN)
             val clientPatternDate = sdf.format(serverPatterDate)
-            return clientPatternDate.toString()
+            return clientPatternDate.orEmpty()
         }
 
         fun getServerPatternDate(date: String?): String {
@@ -43,7 +43,7 @@ class DateUtils {
             val clientPatternDate = sdf.parse(date) ?: return ""
             sdf.applyPattern(SERVER_PATTERN)
             val serverPatterDate = sdf.format(clientPatternDate)
-            return serverPatterDate.toString()
+            return serverPatterDate.orEmpty()
         }
 
         fun getString(date: Long, format: String?): String? {
@@ -51,32 +51,7 @@ class DateUtils {
             return getString(d, format)
         }
 
-        fun getString(date: Date?, format: String?): String? {
-            val sdf = SimpleDateFormat(format, Locale("pt", "Br"))
-            return sdf.format(date)
-        }
-
-        fun getString(date: Calendar?, format: String?): String? {
-            return if (date == null) {
-                ""
-            } else getString(date.time, format)
-        }
-
-        fun getServerPatternDate(date: String?): String {
-            if (date.isNullOrBlank()) return ""
-            val sdf = SimpleDateFormat(CLIENT_PATTERN, Locale.US)
-            val clientPatternDate = sdf.parse(date) ?: return ""
-            sdf.applyPattern(SERVER_PATTERN)
-            val serverPatterDate = sdf.format(clientPatternDate)
-            return serverPatterDate.toString()
-        }
-
-        fun getString(date: Long, format: String?): String? {
-            val d = Date(date)
-            return getString(d, format)
-        }
-
-        fun getString(date: Date?, format: String?): String? {
+        fun getString(date: Date, format: String?): String? {
             val sdf = SimpleDateFormat(format, Locale("pt", "Br"))
             return sdf.format(date)
         }

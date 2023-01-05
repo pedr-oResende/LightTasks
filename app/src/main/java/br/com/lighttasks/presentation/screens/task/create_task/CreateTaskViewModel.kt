@@ -22,7 +22,9 @@ import kotlinx.coroutines.launch
 class CreateTaskViewModel(
     private val getBasicUserUseCase: GetBasicUserUseCase,
     private val createTaskUseCase: CreateTaskUseCase,
-    private val editTaskUseCase: EditTaskUseCase
+    private val editTaskUseCase: EditTaskUseCase,
+    task: Task?,
+    responsibleId: Long?
 ) : ViewModel() {
 
     private val _createTaskUI = mutableStateOf(CreateTaskUI())
@@ -50,13 +52,19 @@ class CreateTaskViewModel(
             }
             is CreateTaskEvents.TaskResponsibleChanged -> {
                 _createTaskUI.value = createTaskUI.value.copy(
-                    responsibleId = event.responsible
+                    responsible = event.responsible
                 )
             }
         }
     }
 
-    fun setResponsible(id: Long?) {
+    init {
+        setTask(task)
+        if (responsibleId != null)
+            setResponsible(responsibleId)
+    }
+
+    private fun setResponsible(id: Long) {
         viewModelScope.launch {
             getBasicUserUseCase(id).onStart {
                 _responsibleResponse.emit(StateUI.Processing())
@@ -64,18 +72,18 @@ class CreateTaskViewModel(
                 _responsibleResponse.emit(StateUI.Error(it.message.toString()))
             }.collect { user ->
                 _responsibleResponse.emit(StateUI.Processed(user))
-                _createTaskUI.value = createTaskUI.value.copy(responsibleId = user)
+                _createTaskUI.value = createTaskUI.value.copy(responsible = user)
             }
         }
     }
 
-    fun setTask(task: Task?) {
+    private fun setTask(task: Task?) {
         _createTaskUI.value = createTaskUI.value.copy(
             task = task,
             isEditingTask = task != null,
-            name = task?.name ?: "",
-            description =  task?.description ?: "",
-            deadline = DateUtils.getClientPatternDate(task?.deadline)
+            name = task?.name.orEmpty(),
+            description =  task?.description.orEmpty(),
+            deadline = task?.deadline.orEmpty()
         )
     }
 

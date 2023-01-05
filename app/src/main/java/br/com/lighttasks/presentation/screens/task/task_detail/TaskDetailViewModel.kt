@@ -15,7 +15,8 @@ import kotlinx.coroutines.launch
 
 class TaskDetailViewModel(
     private val getBasicUserUseCase: GetBasicUserUseCase,
-    private val editTaskUseCase: EditTaskUseCase
+    private val editTaskUseCase: EditTaskUseCase,
+    task: Task?
 ) : ViewModel() {
 
     private val _taskDetailUI = mutableStateOf(TaskDetailUI())
@@ -27,12 +28,12 @@ class TaskDetailViewModel(
     private val _finishTaskResponse = MutableStateFlow<StateUI<Task>>(StateUI.Idle())
     val finishTaskResponse: StateFlow<StateUI<Task>> = _finishTaskResponse
 
-    fun loadTask(task: Task?) {
+    init {
         _taskDetailUI.value = taskDetailUI.value.copy(task = task)
-        getResponsible(task?.responsibleId)
+        getResponsible(task?.responsibleId!!)
     }
 
-    private fun getResponsible(id: Long?) {
+    private fun getResponsible(id: Long) {
         viewModelScope.launch {
             getBasicUserUseCase(id).onStart {
                 _responsibleResponse.emit(StateUI.Processing())

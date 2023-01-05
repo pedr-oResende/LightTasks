@@ -1,5 +1,6 @@
 package br.com.lighttasks.presentation.di
 
+import br.com.lighttasks.domain.model.Task
 import br.com.lighttasks.presentation.screens.task.task_list.TasksViewModel
 import br.com.lighttasks.presentation.screens.login.LoginViewModel
 import br.com.lighttasks.presentation.screens.register.RegisterViewModel
@@ -32,26 +33,21 @@ val viewModelModules = module {
         )
     }
 
-    viewModel {
+    viewModel { (task: Task?) ->
         TaskDetailViewModel(
             getBasicUserUseCase = get(),
-            editTaskUseCase = get()
+            editTaskUseCase = get(),
+            task = task
         )
     }
 
-    viewModel {
+    viewModel { (task: Task?, responsibleId: Long?) ->
         CreateTaskViewModel(
             getBasicUserUseCase = get(),
             editTaskUseCase = get(),
-            createTaskUseCase = get()
-        )
-    }
-
-    viewModel {
-        CreateTaskViewModel(
-            getBasicUserUseCase = get(),
-            editTaskUseCase = get(),
-            createTaskUseCase = get()
+            createTaskUseCase = get(),
+            task = task,
+            responsibleId = responsibleId
         )
     }
 

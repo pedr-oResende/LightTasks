@@ -5,7 +5,7 @@ import br.com.lighttasks.data.remote.model.basic_users.BasicUserResponse
 
 interface BasicUserRemoteDataSource {
 
-    fun getBasicUserById(id: Long?): BasicUserResponse
+    fun getBasicUserById(id: Long): BasicUserResponse
 
     fun editBasicUser(id: Long, basicUser: BasicUserRequest): BasicUserResponse
 

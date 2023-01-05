@@ -8,6 +8,6 @@ data class CreateTaskUI(
     val name: String = "",
     val description: String = "",
     val deadline: String = "",
-    val responsibleId: BasicUser? = null,
+    val responsible: BasicUser? = null,
     val isEditingTask: Boolean = false
 )
