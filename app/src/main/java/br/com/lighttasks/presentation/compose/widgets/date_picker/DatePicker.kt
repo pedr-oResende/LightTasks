@@ -9,6 +9,7 @@ import java.util.*
 
 @Composable
 fun DefaultDatePicker(
+    startDate: LocalDate = LocalDate.now(),
     showDatePicker: Boolean,
     setShowDatePicker: (Boolean) -> Unit,
     datePickerResultListener: (String) -> Unit
@@ -16,6 +17,8 @@ fun DefaultDatePicker(
     if (showDatePicker) {
         ComposeCalendar(
             minDate = LocalDate.now(),
+            maxDate = LocalDate.now().plusYears(1L),
+            startDate = startDate,
             onDone = {
                 val zoneId = ZoneId.systemDefault()
                 val date = Date.from(it.atStartOfDay(zoneId).toInstant())

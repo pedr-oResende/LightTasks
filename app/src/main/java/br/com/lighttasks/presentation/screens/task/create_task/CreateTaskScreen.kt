@@ -80,6 +80,7 @@ fun CreateTaskScreen(
                 }
             )
             DefaultDatePicker(
+                startDate = DateUtils.getLocalDate(createTaskUI.deadline),
                 showDatePicker = showDatePicker,
                 setShowDatePicker = setShowDatePicker
             ) { date ->

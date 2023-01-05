@@ -7,6 +7,5 @@ data class DateWrapper(
     val isSelectedDay: Boolean,
     val isCurrentDay: Boolean,
     val isCurrentMonth: Boolean,
-    val isInDateRange: Boolean,
-    val showCurrentMonthOnly: Boolean
+    val isInDateRange: Boolean
 )

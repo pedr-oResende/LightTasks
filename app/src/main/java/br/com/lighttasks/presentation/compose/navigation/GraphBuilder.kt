@@ -111,6 +111,36 @@ fun NavGraphBuilder.createTaskForTeamMember(
 }
 
 @OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.createPersonalTask(
+    navHostController: NavHostController,
+    onBackPressedDispatcher: OnBackPressedDispatcher
+) {
+    composable(
+        route = Screens.CreatePersonalTask.route
+    ) {
+        CreatePersonalTaskScreen(
+            navHostController = navHostController,
+            onBackPressedDispatcher = onBackPressedDispatcher
+        )
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.createTaskForTeamMember(
+    navHostController: NavHostController,
+    onBackPressedDispatcher: OnBackPressedDispatcher
+) {
+    composable(
+        route = Screens.CreateTaskForTeamMember.route
+    ) {
+        CreateTaskForTeamMemberScreen(
+            navHostController = navHostController,
+            onBackPressedDispatcher = onBackPressedDispatcher
+        )
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.teamDetail(
     navHostController: NavHostController,
     onBackPressedDispatcher: OnBackPressedDispatcher

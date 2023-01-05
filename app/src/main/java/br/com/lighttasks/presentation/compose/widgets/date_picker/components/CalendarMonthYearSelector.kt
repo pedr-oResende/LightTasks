@@ -11,25 +11,21 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.OffsetTime
 import java.util.*
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalendarMonthYearSelector(
-    coroutineScope: CoroutineScope,
-    pagerState: PagerState,
+    currentPage: Int,
     pagerDate: LocalDate,
-    onChipClicked: () -> Unit
+    onChipClicked: () -> Unit,
+    onPageChanged: (Int) -> Unit,
+    pageCount: Int
 ) {
     val pagerMonthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
-
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -52,16 +48,9 @@ fun CalendarMonthYearSelector(
         Spacer(modifier = Modifier.weight(1F))
         IconButton(
             onClick = {
-                coroutineScope.launch {
-                    with(pagerState) {
-                        try {
-                            animateScrollToPage(currentPage - 1)
-                        } catch (e: Exception) {
-                            // avoid IOOB and animation crashes
-                        }
-                    }
-                }
-            }
+                onPageChanged(currentPage.minus(1))
+            },
+            enabled = currentPage > 0
         ) {
             Icon(
                 Icons.Default.ChevronLeft, "ChevronLeft"
@@ -69,16 +58,9 @@ fun CalendarMonthYearSelector(
         }
         IconButton(
             onClick = {
-                coroutineScope.launch {
-                    with(pagerState) {
-                        try {
-                            animateScrollToPage(currentPage + 1)
-                        } catch (e: Exception) {
-                            // avoid IOOB and animation crashes
-                        }
-                    }
-                }
-            }
+                onPageChanged(currentPage.plus(1))
+            },
+            enabled = currentPage < (pageCount - 1)
         ) {
             Icon(
                 Icons.Default.ChevronRight, "ChevronRight",

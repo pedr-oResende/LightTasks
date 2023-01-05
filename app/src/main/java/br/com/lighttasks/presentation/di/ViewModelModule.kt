@@ -47,4 +47,12 @@ val viewModelModules = module {
         )
     }
 
+    viewModel {
+        CreateTaskViewModel(
+            getBasicUserUseCase = get(),
+            editTaskUseCase = get(),
+            createTaskUseCase = get()
+        )
+    }
+
 }
