@@ -21,8 +21,22 @@ fun FormEditText(
     isError: Boolean = false,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-    maxLines: Int = 1
+    maxLines: Int = 1,
+    enabled: Boolean = true,
+    useDisableColors: Boolean = true
 ) {
+    val colors = if (enabled.not() && useDisableColors.not()) {
+        TextFieldDefaults.outlinedTextFieldColors(
+            disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            disabledLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            disabledBorderColor = MaterialTheme.colorScheme.outline,
+            disabledPlaceholderColor = MaterialTheme.colorScheme.onSurface,
+            disabledTextColor = MaterialTheme.colorScheme.onSurface,
+            disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    } else {
+        TextFieldDefaults.outlinedTextFieldColors()
+    }
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
         value = value,
@@ -38,11 +52,12 @@ fun FormEditText(
             imeAction = ImeAction.Next
         ),
         shape = MaterialTheme.shapes.small,
-        colors = TextFieldDefaults.outlinedTextFieldColors(),
+        colors = colors,
         visualTransformation = visualTransformation ?: VisualTransformation.None,
         isError = isError,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
-        maxLines = maxLines
+        maxLines = maxLines,
+        enabled = enabled
     )
 }

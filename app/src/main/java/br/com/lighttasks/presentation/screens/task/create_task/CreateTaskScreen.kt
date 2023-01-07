@@ -1,26 +1,25 @@
 package br.com.lighttasks.presentation.screens.task.create_task
 
 import androidx.activity.OnBackPressedDispatcher
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import br.com.lighttasks.commom.extensions.noRippleClickable
 import br.com.lighttasks.commom.util.date.DateUtils
 import br.com.lighttasks.presentation.compose.widgets.date_picker.DefaultDatePicker
 import br.com.lighttasks.presentation.compose.widgets.edit_text.FormEditText
 import br.com.lighttasks.presentation.compose.widgets.top_bar.TopBar
 import br.com.lighttasks.presentation.screens.task.create_task.ui.CreateTaskEvents
+import java.time.LocalDate
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +41,6 @@ fun CreateTaskScreen(
             )
         }
     ) { paddingValues ->
-        val (showDatePicker, setShowDatePicker) = rememberSaveable { mutableStateOf(false) }
         Column(
             modifier = Modifier
                 .padding(paddingValues = paddingValues)
@@ -66,26 +64,43 @@ fun CreateTaskScreen(
                 },
                 maxLines = 3
             )
-            FormEditText(
-                value = DateUtils.getClientPatternDate(createTaskUI.deadline),
+            DatePickerEditText(
+                value = createTaskUI.deadline,
                 label = "Prazo",
-                onValueChange = { },
-                maxLines = 1,
-                trailingIcon = {
-                    IconButton(onClick = {
-                        setShowDatePicker(true)
-                    }) {
-                        Icon(imageVector = Icons.Default.CalendarToday, contentDescription = null)
-                    }
-                }
+                onDateChanged = { date ->
+                    viewModel.onEvent(CreateTaskEvents.TaskDeadlineChanged(date))
+                },
+                startDate = DateUtils.getLocalDate(createTaskUI.deadline)
             )
-            DefaultDatePicker(
-                startDate = DateUtils.getLocalDate(createTaskUI.deadline),
-                showDatePicker = showDatePicker,
-                setShowDatePicker = setShowDatePicker
-            ) { date ->
-                viewModel.onEvent(CreateTaskEvents.TaskDeadlineChanged(date))
-            }
         }
+    }
+}
+
+@Composable
+fun DatePickerEditText(
+    label: String,
+    value: String,
+    onDateChanged: (date: String) -> Unit,
+    startDate: LocalDate
+) {
+    val (showDatePicker, setShowDatePicker) = rememberSaveable { mutableStateOf(false) }
+    FormEditText(
+        modifier = Modifier.noRippleClickable { setShowDatePicker(true) },
+        value = DateUtils.getClientPatternDate(value),
+        label = label,
+        onValueChange = { },
+        maxLines = 1,
+        trailingIcon = {
+            Icon(imageVector = Icons.Default.CalendarToday, contentDescription = null)
+        },
+        enabled = false,
+        useDisableColors = false
+    )
+    DefaultDatePicker(
+        startDate = startDate,
+        showDatePicker = showDatePicker,
+        setShowDatePicker = setShowDatePicker
+    ) { date ->
+        onDateChanged(date)
     }
 }
