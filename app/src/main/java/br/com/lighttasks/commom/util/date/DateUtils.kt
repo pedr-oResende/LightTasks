@@ -1,5 +1,6 @@
 package br.com.lighttasks.commom.util.date
 
+import br.com.lighttasks.commom.extensions.ifNull
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -34,7 +35,7 @@ class DateUtils {
             val serverPatterDate = sdf.parse(date) ?: return ""
             sdf.applyPattern(CLIENT_PATTERN)
             val clientPatternDate = sdf.format(serverPatterDate)
-            return clientPatternDate.orEmpty()
+            return clientPatternDate ifNull ""
         }
 
         fun getServerPatternDate(date: String?): String {
@@ -43,7 +44,7 @@ class DateUtils {
             val clientPatternDate = sdf.parse(date) ?: return ""
             sdf.applyPattern(SERVER_PATTERN)
             val serverPatterDate = sdf.format(clientPatternDate)
-            return serverPatterDate.orEmpty()
+            return serverPatterDate ifNull ""
         }
 
         fun getString(date: Long, format: String?): String? {

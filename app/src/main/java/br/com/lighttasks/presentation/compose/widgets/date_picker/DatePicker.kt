@@ -1,6 +1,7 @@
 package br.com.lighttasks.presentation.compose.widgets.date_picker
 
 import androidx.compose.runtime.Composable
+import br.com.lighttasks.commom.extensions.ifNull
 import br.com.lighttasks.commom.util.date.DateUtils
 import java.time.LocalDate
 import java.time.ZoneId
@@ -23,7 +24,7 @@ fun DefaultDatePicker(
                 val zoneId = ZoneId.systemDefault()
                 val date = Date.from(it.atStartOfDay(zoneId).toInstant())
                 val dateString = DateUtils.getString(date, "yyyy-MM-dd")
-                datePickerResultListener(dateString ?: "")
+                datePickerResultListener(dateString ifNull "")
                 setShowDatePicker(false)
             },
             onDismiss = {

@@ -1,7 +1,6 @@
 package br.com.lighttasks.presentation.screens.task.create_task
 
 import androidx.activity.OnBackPressedDispatcher
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday

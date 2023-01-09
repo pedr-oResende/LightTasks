@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import br.com.lighttasks.commom.extensions.ifNull
 import br.com.lighttasks.commom.util.priority.getPriorityContainerColor
 import br.com.lighttasks.commom.util.priority.getPriorityOnContainerColor
 import br.com.lighttasks.domain.model.Priority
@@ -44,14 +45,14 @@ fun TaskItem(
         ) {
             Column {
                 Text(
-                    text = task.name ?: "",
+                    text = task.name ifNull "",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = task.description ?: "",
+                    text = task.description ifNull "",
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodyMedium
                 )

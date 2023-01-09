@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import br.com.lighttasks.commom.extensions.ifNull
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,12 +49,12 @@ fun FormEditText(
         },
         singleLine = true,
         keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType ?: KeyboardType.Text,
+            keyboardType = keyboardType ifNull KeyboardType.Text,
             imeAction = ImeAction.Next
         ),
         shape = MaterialTheme.shapes.small,
         colors = colors,
-        visualTransformation = visualTransformation ?: VisualTransformation.None,
+        visualTransformation = visualTransformation ifNull VisualTransformation.None,
         isError = isError,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,

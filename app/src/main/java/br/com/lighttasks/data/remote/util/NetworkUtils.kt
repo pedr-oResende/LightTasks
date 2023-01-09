@@ -1,5 +1,6 @@
 package br.com.lighttasks.data.remote.util
 
+import br.com.lighttasks.commom.extensions.ifNull
 import br.com.lighttasks.commom.model.Message
 import com.google.gson.Gson
 import kotlinx.coroutines.coroutineScope
@@ -36,7 +37,7 @@ internal suspend fun <T : Any> apiCall(call: suspend () -> T): T {
 
 private fun convertErrorBody(throwable: HttpException): Message? {
     return try {
-        val json: String = throwable.response()?.errorBody()?.string() ?: ""
+        val json: String = throwable.response()?.errorBody()?.string() ifNull ""
         val jsonObject = JSONObject(json)
         Gson().fromJson(jsonObject.toString(), Message::class.java)
     } catch (throwable: Throwable) {
