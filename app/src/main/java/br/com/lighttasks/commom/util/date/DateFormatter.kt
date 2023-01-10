@@ -1,7 +1,6 @@
 package br.com.lighttasks.commom.util.date
 
 import br.com.lighttasks.commom.exceptions.InvalidFormatException
-import br.com.lighttasks.commom.extensions.notEquals
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,7 +23,7 @@ class DateFormatter {
     }
 
     private fun validatePattern(pattern: String) {
-        if ((pattern notEquals SERVER_PATTERN) and (pattern notEquals CLIENT_PATTERN)) {
+        if ((pattern != SERVER_PATTERN) and (pattern != CLIENT_PATTERN)) {
             throw InvalidFormatException("Date format can only be $SERVER_PATTERN or $CLIENT_PATTERN")
         }
     }
