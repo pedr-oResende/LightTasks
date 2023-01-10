@@ -9,3 +9,7 @@ fun CharSequence.containsIgnoringAccent(
     val normalizedString = StringUtils.stripAccents(this.toString()).lowercase()
     return normalizedString.contains(other, ignoreCase = ignoreCase)
 }
+
+infix fun String.notEquals(other: String) = this != other
+
+infix fun String.equals(other: String) = this == other
