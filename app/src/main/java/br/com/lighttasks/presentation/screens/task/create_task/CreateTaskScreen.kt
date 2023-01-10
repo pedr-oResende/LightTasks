@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import br.com.lighttasks.commom.extensions.ifNull
 import br.com.lighttasks.commom.extensions.noRippleClickable
 import br.com.lighttasks.commom.util.date.DateUtils
 import br.com.lighttasks.presentation.compose.widgets.date_picker.DefaultDatePicker
@@ -68,8 +69,7 @@ fun CreateTaskScreen(
                 label = "Prazo",
                 onDateChanged = { date ->
                     viewModel.onEvent(CreateTaskEvents.TaskDeadlineChanged(date))
-                },
-                startDate = DateUtils.getLocalDate(createTaskUI.deadline)
+                }
             )
         }
     }
@@ -79,13 +79,17 @@ fun CreateTaskScreen(
 fun DatePickerEditText(
     label: String,
     value: String,
-    onDateChanged: (date: String) -> Unit,
-    startDate: LocalDate
+    onDateChanged: (date: String) -> Unit
 ) {
     val (showDatePicker, setShowDatePicker) = rememberSaveable { mutableStateOf(false) }
+    val deadline = if (value.isBlank())
+        value
+    else
+        DateUtils.getClientPatternDate(value ifNull "")
+    val startDate = if (value.isBlank()) LocalDate.now() else DateUtils.getLocalDate(value)
     FormEditText(
         modifier = Modifier.noRippleClickable { setShowDatePicker(true) },
-        value = DateUtils.getClientPatternDate(value),
+        value = deadline,
         label = label,
         onValueChange = { },
         maxLines = 1,

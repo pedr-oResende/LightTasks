@@ -1,72 +1,69 @@
 package br.com.lighttasks.commom.util.date
 
 import br.com.lighttasks.commom.extensions.ifNull
+import br.com.lighttasks.commom.util.date.DateFormatter.Companion.CLIENT_PATTERN
+import br.com.lighttasks.commom.util.date.DateFormatter.Companion.SERVER_PATTERN
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class DateUtils {
     companion object {
-        private const val SERVER_PATTERN = "yyyy-MM-dd"
-        private const val CLIENT_PATTERN = "dd/MM/yyyy"
+        private val formatter = DateFormatter()
 
-        private fun getCurrentDate(): String? {
+        private fun getCurrentDate(): String {
             val dtf = DateTimeFormatter.ofPattern(SERVER_PATTERN)
             return LocalDateTime.now().format(dtf)
         }
 
-        fun daysBetweenDates(second: String?, first: String = getCurrentDate().toString()): Long? {
+        fun daysBetweenDates(second: String?, first: String = getCurrentDate()): Long? {
             if (second == null) return null
-            val sdf = SimpleDateFormat(SERVER_PATTERN, Locale.US)
-            val firstDate = sdf.parse(first)!!
-            val secondDate = sdf.parse(second)!!
+            formatter.setPattern(SERVER_PATTERN)
+            val firstDate = formatter.format(first)
+            val secondDate = formatter.format(second)
             val difference = secondDate.time - firstDate.time
-            val seconds = difference / 1000
-            val minutes = seconds / 60
-            val hours = minutes / 60
-            return (hours / 24) + 1
+            return TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS)
         }
 
-        fun getClientPatternDate(date: String?): String {
-            if (date.isNullOrBlank()) return ""
-            val sdf = SimpleDateFormat(SERVER_PATTERN, Locale.US)
-            val serverPatterDate = sdf.parse(date) ?: return ""
-            sdf.applyPattern(CLIENT_PATTERN)
-            val clientPatternDate = sdf.format(serverPatterDate)
-            return clientPatternDate ifNull ""
-        }
-
-        fun getServerPatternDate(date: String?): String {
-            if (date.isNullOrBlank()) return ""
-            val sdf = SimpleDateFormat(CLIENT_PATTERN, Locale.US)
-            val clientPatternDate = sdf.parse(date) ?: return ""
-            sdf.applyPattern(SERVER_PATTERN)
-            val serverPatterDate = sdf.format(clientPatternDate)
-            return serverPatterDate ifNull ""
-        }
-
-        fun getString(date: Long, format: String?): String? {
-            val d = Date(date)
-            return getString(d, format)
-        }
-
-        fun getString(date: Date, format: String?): String? {
-            val sdf = SimpleDateFormat(format, Locale("pt", "Br"))
-            return sdf.format(date)
-        }
-
-        fun getString(date: Calendar?, format: String?): String? {
-            return if (date == null) {
+        fun getClientPatternDate(date: String): String {
+            return try {
+                getFormattedDate(currentPattern = SERVER_PATTERN, date)
+            } catch (e: Exception) {
                 ""
-            } else getString(date.time, format)
+            }
+        }
+
+        fun getServerPatternDate(date: String): String {
+            return try {
+                getFormattedDate(currentPattern = CLIENT_PATTERN, date)
+            } catch (e: Exception) {
+                ""
+            }
+        }
+
+        private fun getFormattedDate(currentPattern: String, date: String): String {
+            val currentPatterDate = getCurrentPatternDate(currentPattern, date)
+            formatter.switchPattern()
+            val targetPatternDate = formatter.format(currentPatterDate)
+            return targetPatternDate ifNull ""
+        }
+
+        private fun getCurrentPatternDate(currentPattern: String, date: String): Date {
+            formatter.setPattern(currentPattern)
+            return formatter.format(date)
+        }
+
+        fun getString(date: Date, format: String): String {
+            formatter.setPattern(format)
+            return formatter.format(date)
         }
 
         fun getLocalDate(date: String): LocalDate {
-            if (date.isBlank()) return LocalDate.now()
-            val sdf = SimpleDateFormat(SERVER_PATTERN, Locale("pt", "Br"))
-            val formattedDate = sdf.parse(date) ?: return LocalDate.now()
+            formatter.setPattern(SERVER_PATTERN)
+            val formattedDate = formatter.format(date)
             val calendar = Calendar.getInstance()
             calendar.time = formattedDate
             return LocalDate.of(

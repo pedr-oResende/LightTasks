@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.lighttasks.commom.extensions.getArgument
+import br.com.lighttasks.commom.extensions.ifNull
 import br.com.lighttasks.commom.util.date.DateUtils
 import br.com.lighttasks.commom.util.priority.getPriorityContainerColor
 import br.com.lighttasks.domain.model.Task
@@ -137,7 +138,7 @@ fun TaskDetailScreen(
             Spacer(modifier = Modifier.height(32.dp))
             DescriptionMenuItem(
                 title = "Descrição",
-                text = taskDetailUI.task?.description.orEmpty()
+                text = taskDetailUI.task?.description
             )
             Divider(
                 modifier = Modifier
@@ -146,28 +147,31 @@ fun TaskDetailScreen(
             )
             DescriptionMenuItem(
                 title = "Responsável",
-                text = taskDetailUI.responsible?.fullName.orEmpty(),
+                text = taskDetailUI.responsible?.fullName,
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null)
                 },
                 isLoading = isLoading
             )
             Spacer(modifier = Modifier.height(16.dp))
-            DescriptionMenuItem(
-                title = "Prazo",
-                text = DateUtils.getClientPatternDate(taskDetailUI.task?.deadline),
-                leadingIcon = {
-                    Box(
-                        modifier = Modifier
-                            .width(8.dp)
-                            .fillMaxHeight()
-                            .background(
-                                color = getPriorityContainerColor(priority = taskDetailUI.task?.priority),
-                                shape = RoundedCornerShape(50)
-                            )
-                    )
-                }
-            )
+            taskDetailUI.task?.deadline?.let { deadline ->
+                DescriptionMenuItem(
+                    title = "Prazo",
+                    text = DateUtils.getClientPatternDate(deadline),
+                    leadingIcon = {
+                        Box(
+                            modifier = Modifier
+                                .width(8.dp)
+                                .fillMaxHeight()
+                                .background(
+                                    color = getPriorityContainerColor(priority = taskDetailUI.task.priority),
+                                    shape = RoundedCornerShape(50)
+                                )
+                        )
+                    }
+                )
+            }
+
             viewModel.finishTaskResponse.collectAsState().value.let { response ->
                 when (response) {
                     is StateUI.Error -> {
@@ -190,7 +194,7 @@ fun TaskDetailScreen(
 @Composable
 fun DescriptionMenuItem(
     title: String,
-    text: String,
+    text: String?,
     leadingIcon: @Composable (() -> Unit)? = null,
     isLoading: Boolean = false
 ) {
@@ -209,7 +213,7 @@ fun DescriptionMenuItem(
             ShimmerTextItem(brush = shimmerBrush())
         } else {
             Text(
-                text = text,
+                text = text.orEmpty(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
